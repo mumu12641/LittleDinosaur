@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:id="@+id/messageactivity"
+    android:background="@drawable/treeholemessage">
+    <TextView
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="123"
+        android:id="@+id/messageid"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="5"
+        android:layout_below="@id/messageid"
+        android:id="@+id/messagetime"
+        android:layout_marginLeft="5dp"
+        android:textSize="10sp"
+        android:text="2021/10/24"/>
+    <TextView
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:id="@+id/messagecontent"
+        android:text="我我我我我我我我我我我"
+        android:layout_below="@+id/messagetime"
+        android:maxLines="5"
+        android:ellipsize="end"
+        />
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/messagecontent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/likesline">
+
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:id="@+id/likes"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:background="@drawable/like" />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/messagelikes"
+                android:text="0"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/commentsline">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_marginLeft="100dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:id="@+id/comments"
+                android:background="@drawable/comment"/>
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/messagecomments"
+                android:text="0"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/collectionsline">
+            <ImageView
+                android:id="@+id/collectionsimg"
+                android:layout_gravity="center"
+                android:layout_marginLeft="100dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@drawable/collection"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/messagecollections"
+                android:text="0" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>
