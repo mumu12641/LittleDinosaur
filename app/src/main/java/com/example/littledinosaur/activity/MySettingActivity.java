@@ -1,27 +1,26 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.littledinosaur.ActivityCollector;
+import com.example.littledinosaur.service.PostChangedNameService;
+import com.example.littledinosaur.R;
+import com.example.littledinosaur.UserDataBase;
 
 public class MySettingActivity extends AppCompatActivity {
 
@@ -83,7 +82,7 @@ public class MySettingActivity extends AppCompatActivity {
                     sqLiteDatabase.update("User",values,"UserEmail=?", new String[]{Useremail});
                     sqLiteDatabase.close();
 
-                    Intent intent = new Intent(MySettingActivity.this,PostChangedNameService.class);
+                    Intent intent = new Intent(MySettingActivity.this, PostChangedNameService.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("Username",newname);
                     bundle.putString("Useremail",Useremail);
@@ -99,7 +98,7 @@ public class MySettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 editName.clearFocus();
-                Intent intent1 = new Intent(MySettingActivity.this,HomeActivity.class);
+                Intent intent1 = new Intent(MySettingActivity.this, HomeActivity.class);
                 intent1.putExtra("Username",newname);
                 startActivity(intent1);
                 MySettingActivity.this.finish();

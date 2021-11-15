@@ -40,21 +40,21 @@ extra中计划加一些现在未能想到的内容，预计用json数组添加�
 
 编辑完了之后回到首页界面的时候我们就自动刷新一次向服务器请求数据
 
+***10/26日更新 我在实现树洞消息更新的时候是如此实现的：我们进入写树洞activity的时候都把我们本身的homeactivity给finish掉，返回的时候重新创建这个activity，实现了homefragment的重建，而每次homefragment重建的时候我们都是在服务器获取数据布局界面，因此而实现了树洞消息的刷新。***
 
+***但是还有另外一个方法，还是使用startactivityforresult，返回到homeactivity的时候我们就将homefragmen转为null，并且模拟点击home实现重建（成功）***
 
-<u>***11/3 TODO***</u>
+<u>***11/3 TODO（完成）***</u>
 
 ***重构了treeholemessage类加入一些新内容，每次用户在writetreeholemessageactivity中写完内容发送到服务器的时候，需要重构POST的内容以及将服务器端的Json文件重构一下***
 
 
 
-***<u>点赞评论收藏设计</u>***
+***<u>点赞评论收藏设计</u>（完成）***
 
 ***在homefragment中点击点赞按钮即可，此时POST点赞的用户的姓名到服务器，treeholemessage的json文件中的likes加一，重绘这一个adapter（成功）。***
 
 ***同时新建一个对应messageid的json文件其中储存点击点赞的人的用户名 评论的用户用户名以及评论内容和时间	json文件设计 {"likesmessageuser": [{"1": "Infinity Studio Administrator"}], "commentsmessageuser": [], "commentscontent": [], "commentstime": [],"commentstime": []}***	
-
-
 
 ***取消点赞返回服务器（完成）***
 
@@ -68,23 +68,21 @@ extra中计划加一些现在未能想到的内容，预计用json数组添加�
 
 **刷新功能 如同首页的刷新功能 计划返回每一个adpter 然后显示 读取#00001中的文件来读取并且返回**
 
+
+
 ***<u>11/11&11/13 TODO</u>***
 
 ***头像的设计（可能要拖到很后面）***
 
 ***点赞评论收藏的时候更新时间*** ***希望时间精确到分钟***
 
-***评论界面的气泡线条更改更好看点****
+***评论界面的气泡线条更改更好看点***
 
-
-
-***10/26日更新 我在实现树洞消息更新的时候是如此实现的：我们进入写树洞activity的时候都把我们本身的homeactivity给finish掉，返回的时候重新创建这个activity，实现了homefragment的重建，而每次homefragment重建的时候我们都是在服务器获取数据布局界面，因此而实现了树洞消息的刷新。***
-
-***但是还有另外一个方法，还是使用startactivityforresult，返回到homeactivity的时候我们就将homefragmen转为null，并且模拟点击home实现重建（成功）***
+***学习动画知识，优化开机动画***
 
 ## 7.发现界面功能
 
-今日天气 课程表 备忘录 知乎热榜 微博热榜 哔哩哔哩热榜 csdn热榜 今天吃什么 童年OP 每天夸夸
+今日天气 课程表 备忘录 知乎热榜 微博热榜 哔哩哔哩热榜 csdn热榜 今天吃什么 童年OP 每天夸夸 跳蚤市场
 
 ## 8.其他
 

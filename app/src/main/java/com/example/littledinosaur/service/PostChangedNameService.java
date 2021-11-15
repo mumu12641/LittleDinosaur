@@ -1,4 +1,4 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.service;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
+
+import com.example.littledinosaur.HttpRequest;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in

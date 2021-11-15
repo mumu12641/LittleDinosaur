@@ -2,6 +2,9 @@ package com.example.littledinosaur;
 
 import android.util.Log;
 
+import com.example.littledinosaur.adapter.CommentMessage;
+import com.example.littledinosaur.adapter.TreeHoleMessage;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

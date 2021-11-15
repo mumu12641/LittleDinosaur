@@ -1,4 +1,4 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.adapter;
 
 public class CommentMessage {
     private String MessageId;

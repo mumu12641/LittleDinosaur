@@ -1,11 +1,9 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +15,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.littledinosaur.HttpRequest;
+import com.example.littledinosaur.R;
+import com.example.littledinosaur.activity.MessageActivity;
 
 import java.util.List;
 
@@ -250,7 +251,7 @@ public class TreeHoleMessageAdapter extends RecyclerView.Adapter<TreeHoleMessage
             public void onClick(View v) {
                 int possition = viewHolder.getAdapterPosition();
                  String MessageId = list.get(possition).getMessageId();
-                Intent intent = new Intent(v.getContext(),MessageActivity.class);
+                Intent intent = new Intent(v.getContext(), MessageActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("MessageId",MessageId);
                 bundle.putString("UserName",UserName);

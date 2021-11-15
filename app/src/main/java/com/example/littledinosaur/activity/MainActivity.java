@@ -1,34 +1,19 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.activity;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.app.AppOpsManager;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.AnimationDrawable;
-import android.media.Image;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.provider.Settings;
-import android.util.Log;
-import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.concurrent.TimeUnit;
+import com.example.littledinosaur.ActivityCollector;
+import com.example.littledinosaur.service.GetUserDataIntentService;
+import com.example.littledinosaur.R;
+import com.example.littledinosaur.UserDataBase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase sqdb = myDatabase.getWritableDatabase();
 
 
-        Intent intent = new Intent(MainActivity.this,GetUserDataIntentService.class);
+        Intent intent = new Intent(MainActivity.this, GetUserDataIntentService.class);
         startService(intent);
 
         ImageView imageView = findViewById((R.id.lancnh));
@@ -67,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
              @Override
              public void onAnimationEnd(Animation animation) {
-                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                  startActivity(intent);
                  MainActivity.this.finish();
              }

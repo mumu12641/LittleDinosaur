@@ -1,4 +1,4 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.adapter;
 
 import java.io.Serializable;
 

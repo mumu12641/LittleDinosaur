@@ -1,16 +1,12 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.fragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.littledinosaur.HttpRequest;
+import com.example.littledinosaur.JsonParse;
+import com.example.littledinosaur.R;
+import com.example.littledinosaur.adapter.TreeHoleMessage;
+import com.example.littledinosaur.adapter.TreeHoleMessageAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;

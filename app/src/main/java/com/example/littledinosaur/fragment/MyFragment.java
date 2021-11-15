@@ -1,4 +1,4 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.fragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.littledinosaur.R;
+import com.example.littledinosaur.activity.MySettingActivity;
 
 public class MyFragment extends Fragment {
     private String Username;
@@ -32,7 +35,7 @@ public class MyFragment extends Fragment {
         line1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,MySettingActivity.class);
+                Intent intent = new Intent(context, MySettingActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("Username",Username);
                 intent.putExtras(bundle);

@@ -1,39 +1,35 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.activity;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.littledinosaur.ActivityCollector;
+import com.example.littledinosaur.fragment.HomeFragment;
+import com.example.littledinosaur.fragment.MyFragment;
+import com.example.littledinosaur.R;
+import com.example.littledinosaur.fragment.SearchFragment;
+import com.example.littledinosaur.TitleBar;
+import com.example.littledinosaur.adapter.TreeHoleMessage;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import static android.view.View.INVISIBLE;
 
@@ -132,7 +128,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 setSelected();
                 home.setSelected(true);
                 titleBar.setVisibility(View.VISIBLE);
-//                refreshLayout.setVisibility(View.VISIBLE);
+                refreshLayout.setVisibility(View.VISIBLE);
                 floatingActionButton.setVisibility(View.VISIBLE);
                 titleBar.setText("首页");
                 if (home.isSelected()){
@@ -152,7 +148,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 setSelected();
                 search.setSelected(true);
                 titleBar.setVisibility(View.VISIBLE);
-//                refreshLayout.setVisibility(INVISIBLE);
+               // refreshLayout.setVisibility(INVISIBLE);
                 titleBar.setText("发现");
                 floatingActionButton.setVisibility(INVISIBLE);
                 if (search.isSelected()){
@@ -161,7 +157,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 hideAllFragment(transaction);
                 if (searchFragment == null){
-                    searchFragment = new SearchFragment();
+                    searchFragment = new SearchFragment(HomeActivity.this);
                     transaction.add(R.id.content,searchFragment);
                 }else{
                     transaction.show(searchFragment);
@@ -172,7 +168,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 my.setSelected(true);
                 titleBar.setText("我的");
                 floatingActionButton.setVisibility(INVISIBLE);
-//                refreshLayout.setVisibility(INVISIBLE);
+              //  refreshLayout.setVisibility(INVISIBLE);
                 if (my.isSelected()){
                     my.setImageResource(R.drawable.myclicked1);
 //                    mytext.setTextColor(Color.rgb(6,194,95));

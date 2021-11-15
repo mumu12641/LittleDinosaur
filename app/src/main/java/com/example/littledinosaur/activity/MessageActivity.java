@@ -1,4 +1,4 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +20,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.littledinosaur.adapter.CommentMessage;
+import com.example.littledinosaur.adapter.CommentMessageAdapter;
+import com.example.littledinosaur.HttpRequest;
+import com.example.littledinosaur.JsonParse;
+import com.example.littledinosaur.R;
+import com.example.littledinosaur.adapter.TreeHoleMessage;
 
 import org.json.JSONException;
 
@@ -163,6 +169,8 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
                     thread1.start();
                     editcomment.setText("");
                     editcomment.clearFocus();
+                    refreshLayout.setRefreshing(true);
+                    MessageActivity.this.onRefresh();
                     Toast.makeText(MessageActivity.this,"发送成功",Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(MessageActivity.this,"请先输入你的评论哦",Toast.LENGTH_SHORT).show();

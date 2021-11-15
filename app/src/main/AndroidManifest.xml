@@ -20,7 +20,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
         <activity
-            android:name=".MessageActivity"
+            android:name=".activity.MessageActivity"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="com.example.LittleDinosaur.messageactivty"/>
@@ -29,42 +29,42 @@
         </activity>
 
         <service
-            android:name=".GetTreeHoleMessageService"
+            android:name=".service.GetTreeHoleMessageService"
             android:exported="false" />
         <service
-            android:name=".PostTreeHoleMessageService"
+            android:name=".service.PostTreeHoleMessageService"
             android:exported="false" />
 
         <activity
-            android:name=".WriteTreeHoleMessageActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <service
-            android:name=".PostChangedNameService"
-            android:exported="false" />
-
-        <activity
-            android:name=".MySettingActivity"
+            android:name=".activity.WriteTreeHoleMessageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".GetUserDataIntentService"
-            android:exported="false" />
-        <service
-            android:name=".RegisterIntentService"
+            android:name=".service.PostChangedNameService"
             android:exported="false" />
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".activity.MySettingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".service.GetUserDataIntentService"
+            android:exported="false" />
+        <service
+            android:name=".service.RegisterIntentService"
+            android:exported="false" />
+
+        <activity
+            android:name=".activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activity.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

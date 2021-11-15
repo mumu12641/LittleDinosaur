@@ -1,6 +1,5 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.activity;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.littledinosaur.HttpRequest;
+import com.example.littledinosaur.service.PostTreeHoleMessageService;
+import com.example.littledinosaur.R;
+import com.example.littledinosaur.ReturnBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;

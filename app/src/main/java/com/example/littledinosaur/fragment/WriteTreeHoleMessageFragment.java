@@ -1,4 +1,4 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.littledinosaur.R;
+import com.example.littledinosaur.ReturnBar;
 
 public class WriteTreeHoleMessageFragment extends Fragment {
 

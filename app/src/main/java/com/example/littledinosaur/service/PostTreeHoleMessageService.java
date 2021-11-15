@@ -1,20 +1,15 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.service;
 
 import android.app.IntentService;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import org.json.JSONException;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import com.example.littledinosaur.HttpRequest;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -23,7 +18,7 @@ import java.util.Objects;
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
-public class GetUserDataIntentService extends IntentService {
+public class PostTreeHoleMessageService extends IntentService {
     // TODO: Rename actions, choose action names that describe tasks that this
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
     private static final String ACTION_FOO = "com.example.littledinosaur.action.FOO";
@@ -33,8 +28,8 @@ public class GetUserDataIntentService extends IntentService {
     private static final String EXTRA_PARAM1 = "com.example.littledinosaur.extra.PARAM1";
     private static final String EXTRA_PARAM2 = "com.example.littledinosaur.extra.PARAM2";
 
-    public GetUserDataIntentService() {
-        super("GetUserDataIntentService");
+    public PostTreeHoleMessageService() {
+        super("PostTreeHoleMessageService");
     }
 
     /**
@@ -45,7 +40,7 @@ public class GetUserDataIntentService extends IntentService {
      */
     // TODO: Customize helper method
     public static void startActionFoo(Context context, String param1, String param2) {
-        Intent intent = new Intent(context, GetUserDataIntentService.class);
+        Intent intent = new Intent(context, PostTreeHoleMessageService.class);
         intent.setAction(ACTION_FOO);
         intent.putExtra(EXTRA_PARAM1, param1);
         intent.putExtra(EXTRA_PARAM2, param2);
@@ -60,7 +55,7 @@ public class GetUserDataIntentService extends IntentService {
      */
     // TODO: Customize helper method
     public static void startActionBaz(Context context, String param1, String param2) {
-        Intent intent = new Intent(context, GetUserDataIntentService.class);
+        Intent intent = new Intent(context, PostTreeHoleMessageService.class);
         intent.setAction(ACTION_BAZ);
         intent.putExtra(EXTRA_PARAM1, param1);
         intent.putExtra(EXTRA_PARAM2, param2);
@@ -83,37 +78,29 @@ public class GetUserDataIntentService extends IntentService {
             }
         }
 
-        String string = HttpRequest.RequestHandler();
-        Map<String, String[]> dic = new HashMap<>();
-        JsonParse jsonParseHandler = new JsonParse(string);
-        try {
-//            解析获得的json文本
-            Log.d("Service","连接服务器服务，将网络用户数据写入本机数据库");
-            dic = jsonParseHandler.jsonParse();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e){
-            e.printStackTrace();
-        }
-        UserDataBase myDatabase = new UserDataBase(this, "User.db", null, 1);
-        SQLiteDatabase sqdb = myDatabase.getWritableDatabase();
-        sqdb.execSQL("delete from User");
-        String[] ArrayEmail = dic.get("allEmail");
-        String[] ArrayPassword = dic.get("allPassword");
-        String[] ArrayName = dic.get("allName");
-        String[] ArrayExtra = dic.get("allExtra");
-        ContentValues contentValues = new ContentValues();
-        try{
-            for (int i = 0; i< Objects.requireNonNull(ArrayEmail).length; i++){
-                contentValues.put("UserEmail",ArrayEmail[i]);
-                contentValues.put("UserPassword", Objects.requireNonNull(ArrayPassword)[i]);
-                contentValues.put("UserName", Objects.requireNonNull(ArrayName)[i]);
-                contentValues.put("Extra", Objects.requireNonNull(ArrayExtra)[i]);
-                sqdb.insert("User",null,contentValues);
-                contentValues.clear();
+        Bundle bundle = null;
+        String messageId;
+        String messageSendername;
+        String messageContent;
+        String messageSendTime;
+        String messageLikes;
+        String messageComments;
+        String messageCollections;
+        String messageUpdateTime;
+        if (intent != null) {
+            bundle = intent.getExtras();
+            if (bundle != null) {
+                messageId = bundle.getString("messageId");
+                messageSendername = bundle.getString("messageSenderName");
+                messageContent = bundle.getString("messageContent");
+                messageSendTime = bundle.getString("messageSendTime");
+                messageLikes = bundle.getString("messageLikes");
+                messageComments = bundle.getString("messageComments");
+                messageCollections = bundle.getString("messageCollections");
+                messageUpdateTime = bundle.getString("messageUpdateTime");
+                HttpRequest.PostTreeHoleMessage(messageId,messageSendername,messageContent,messageSendTime,messageLikes,messageComments,messageCollections,messageUpdateTime);
+                Log.d("WriteTreeHoleMessage","service");
             }
-        } catch (NullPointerException e){
-            e.printStackTrace();
         }
     }
 

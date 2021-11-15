@@ -1,4 +1,4 @@
-package com.example.littledinosaur;
+package com.example.littledinosaur.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.littledinosaur.ActivityCollector;
+import com.example.littledinosaur.HttpRequest;
+import com.example.littledinosaur.R;
+import com.example.littledinosaur.service.RegisterIntentService;
+import com.example.littledinosaur.UserDataBase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -80,14 +86,14 @@ public class RegisterActivity extends AppCompatActivity {
                 String passwordstr = textpassword.getText().toString();
                 String keystr = textkey.getText().toString();
                 if (keystr.equals(KeyCode[0])){
-                    Intent intent = new Intent(RegisterActivity.this,RegisterIntentService.class);
+                    Intent intent = new Intent(RegisterActivity.this, RegisterIntentService.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("emailstr",emailstr);
                     bundle.putString("passwordstr",passwordstr);
                     intent.putExtras(bundle);
                     startService(intent);
                     Toast.makeText(RegisterActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(RegisterActivity.this,LoginActivity.class);
+                    Intent intent1 = new Intent(RegisterActivity.this, LoginActivity.class);
                     RegisterActivity.this.finish();
                     startActivity(intent1);
                 } else{
