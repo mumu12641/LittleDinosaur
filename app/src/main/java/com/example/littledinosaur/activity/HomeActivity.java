@@ -69,9 +69,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         search = findViewById(R.id.search);
         floatingActionButton = findViewById(R.id.floatingbutton1);
         my = findViewById(R.id.my);
-        hometext  = findViewById(R.id.hometext);
-        searchtext = findViewById(R.id.searchtext);
-        mytext = findViewById(R.id.mytext);
+//        hometext  = findViewById(R.id.hometext);
+//        searchtext = findViewById(R.id.searchtext);
+//        mytext = findViewById(R.id.mytext);
         titleBar = findViewById(R.id.titlebar);
         frameLayout = findViewById(R.id.content);
 

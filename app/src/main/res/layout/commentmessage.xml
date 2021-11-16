@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:text="123123"
         android:textColor="@color/black"
-        android:textSize="30px"/>
+        android:textSize="15sp"/>
     <TextView
         android:layout_margin="5dp"
         android:id="@+id/commentsendtime"
@@ -18,14 +18,14 @@
         android:layout_height="wrap_content"
         android:text="2021/11/12"
         android:textColor="@color/black"
-        android:textSize="30px"
+        android:textSize="15sp"
         android:layout_marginLeft="50dp"/>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_below="@+id/commentsendername"
         android:layout_marginLeft="10dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/buuble3">
+        android:background="@drawable/chatbubble2">
         <TextView
             android:layout_margin="10dp"
             android:id="@+id/commentcontent"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:text="这里是评论的内容"
             android:textColor="@color/black"
-            android:textSize="50px"/>
+            android:textSize="15sp"/>
     </RelativeLayout>
 
 

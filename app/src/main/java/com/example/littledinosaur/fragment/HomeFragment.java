@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -144,6 +146,8 @@ public class HomeFragment extends Fragment {
             Log.d("treeholeMEssage", Objects.requireNonNull(map[0].get("allMessageContent"))[i]);
             treeHoleMessageAdapter.addMessage(treeHoleMessage1);
         }
+//        LayoutAnimationController controller = new LayoutAnimationController(AnimationUtils.loadAnimation(context,R.anim.anim_treeholemessage));
+//        recyclerView.setLayoutAnimation(controller);
         recyclerView.setAdapter(treeHoleMessageAdapter);
         return view;
     }
