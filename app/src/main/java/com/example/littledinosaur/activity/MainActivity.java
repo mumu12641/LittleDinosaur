@@ -13,6 +13,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.littledinosaur.ActivityCollector;
 import com.example.littledinosaur.service.GetUserDataIntentService;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String CHECK_OP_NO_THROW = "checkOpNoThrow";
     private static final String OP_POST_NOTIFICATION = "OP_POST_NOTIFICATION";
     private ImageView imageView;
+    private ImageView imageView3;
+    private ImageView imageView4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, GetUserDataIntentService.class);
         startService(intent);
 
-        imageView = findViewById((R.id.lancnh));
+        imageView = findViewById(R.id.lancnh);
+//        imageView3 = findViewById(R.id.logo);
+//        imageView4 = findViewById(R.id.logotext);
         final ImageView imageView1 = findViewById(R.id.animation);
         AnimationSet animationSet = new AnimationSet(true);//创建一个AlphaAnimation对象，参数从完全的透明度，到完全的不透明
          AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
@@ -49,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         // 使用ImageView的startAnimation方法执行动画
          imageView.startAnimation(animationSet);
          imageView1.startAnimation(animationSet);
+
          animationSet.setAnimationListener(new Animation.AnimationListener() {
              @Override
              public void onAnimationStart(Animation animation) {

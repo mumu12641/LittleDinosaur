@@ -3,11 +3,14 @@ package com.example.littledinosaur.activity;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,9 +22,23 @@ import com.example.littledinosaur.UserDataBase;
 
 public class LoginActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+            SharedPreferences sp=this.getSharedPreferences("login",MODE_PRIVATE);
+            String email=sp.getString("UserEmail", "error");
+            String password=sp.getString("UserPassword", "error");
+            String name = sp.getString("UserName","error");
+            if (!email.equals("error")&&!password.equals("error")&&!name.equals("error")) {
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Username", name);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                Toast.makeText(LoginActivity.this, "欢迎！！！", Toast.LENGTH_SHORT).show();
+                LoginActivity.this.finish();
+            }
         setContentView(R.layout.activity_login);
         ActivityCollector.addAcitivity(this);
         Button register = findViewById(R.id.btn3);
@@ -63,6 +80,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
                             flag = true;
+
+                            SharedPreferences sp = LoginActivity.this.getSharedPreferences("login",LoginActivity.MODE_PRIVATE);
+                            SharedPreferences.Editor edit = sp.edit();
+                            edit.putString("UserEmail", Emailstr);
+                            edit.putString("UserPassword",Passwordstr);
+                            edit.putString("UserName",cursor.getString(cursor.getColumnIndex("UserName")));
+                            edit.apply();
+
                             //进入主页面
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             Bundle bundle = new Bundle();
@@ -92,6 +117,5 @@ public class LoginActivity extends AppCompatActivity {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
     }
-
 
 }

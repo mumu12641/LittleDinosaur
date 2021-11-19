@@ -2,6 +2,7 @@ package com.example.littledinosaur.activity;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,6 +13,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -53,6 +55,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private SwipeRefreshLayout refreshLayout;
     private FragmentTransaction transaction;
     private Scroller scroller;
+    private List<TreeHoleMessage> list;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -175,7 +178,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 hideAllFragment(transaction);
                 if (myFragment == null){
-                    myFragment = new MyFragment(HomeActivity.this,UserName);
+                    myFragment = new MyFragment(HomeActivity.this,UserName,HomeActivity.this);
                     transaction.add(R.id.content,myFragment);
                 }else{
                     transaction.show(myFragment);
@@ -304,6 +307,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onRefresh() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        transaction.remove(homeFragment);
+                        homeFragment = null;
+                        transaction.commitAllowingStateLoss();
+                        home.performClick();
+                    }
+                });
+            }
+        }).start();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -315,17 +333,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 //                home.performClick();
             }
         }, 1000);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-//                refreshLayout.setRefreshing(false);
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.remove(homeFragment);
-                homeFragment = null;
-                transaction.commitAllowingStateLoss();
-                home.performClick();
-            }
-        }, 10);
-    }
+//        new Handler().postDelayed(new Runnable() {
+////            @Override
+////            public void run() {
+//////                refreshLayout.setRefreshing(false);
+////                FragmentTransaction transaction = fragmentManager.beginTransaction();
+////                transaction.remove(homeFragment);
+////                homeFragment = null;
+////                transaction.commitAllowingStateLoss();
+////                home.performClick();
+////            }
+////        }, 10);
 
+    }
 }

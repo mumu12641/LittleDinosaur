@@ -105,17 +105,8 @@ public class JsonParse {
     }
 
     public List<CommentMessage> jsonParseMessageComment(String messageid) throws JSONException {
-//        private String MessageId;
-//        private String CommentContent;
-//        private String CommentSenderName;
-//        private String CommentSendTime;
         JSONObject jsonObject = new JSONObject(JsonText);
         List<CommentMessage> list = new ArrayList<>();
-//        {"likesmessageuser": [{"1": "Infinity Studio Administrator"}],
-//        "commentsmessageuser": [{"1": "Infinity Studio Administrator"}],
-//        "commentscontent": [{"1": "\u4f60\u597d"}],
-//        "commentstime": [{"1": "2021/11/13 13:57"}],
-//        "collectmessageuser": [{"1": "Infinity Studio Administrator"}]}
         String array1 = jsonObject.getString("commentsmessageuser");
         String array2 = jsonObject.getString("commentscontent");
         String array3 = jsonObject.getString("commentstime");

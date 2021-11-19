@@ -45,47 +45,17 @@ public class HomeFragment extends Fragment {
         this.UserName = username;
     }
 
+    public List<TreeHoleMessage> getMessageslist() {
+        return messageslist;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.homefragment,container,false);
-//        refreshLayout = view.findViewById(R.id.refresh);
-//        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-////                HomeActivity activity = (HomeActivity) getActivity();
-////                assert activity != null;
-////                activity.setHomeFragment();
-//                Toast.makeText(context,"刷新",Toast.LENGTH_SHORT).show();
-//                refreshLayout.setRefreshing(false);
-//            }
-//        });
-
-//        initMessage();
-//        RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
-////
-////
-//////        floatingActionButton = view.findViewById(R.id.floatingbutton1);
-//////        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-//////            @Override
-//////            public void onClick(View v) {
-//////                Intent intent = new Intent(context, WriteTreeHoleMessageActivity.class);
-//////                Bundle bundle = new Bundle();
-//////                bundle.putString("Username",UserName);
-//////                intent.putExtras(bundle);
-//////                startActivityForResult(intent,1);
-//////            }
-//////        });
-////
-////
-////        指定recyclerView的布局方式
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        TreeHoleMessageAdapter treeHoleMessageAdapter = new TreeHoleMessageAdapter(messageslist);
-//        recyclerView.setAdapter(treeHoleMessageAdapter);
         final Map<String, String[]>[] map = new Map[]{new HashMap<>()};
+
         Thread thread = new Thread() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -104,25 +74,6 @@ public class HomeFragment extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-//        RecyclerView recyclerView = frameLayout.findViewById(R.id.recyclerview);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeActivity.this);
-//        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        for(int i = 0; i< Objects.requireNonNull(map[0].get("allMessageId")).length; i++){
-//            TreeHoleMessage treeHoleMessage1 = new TreeHoleMessage(
-//                    Objects.requireNonNull(map[0].get("allMessageId"))[i],
-//                    Objects.requireNonNull(map[0].get("allMessageContent"))[i],
-//                    Objects.requireNonNull(map[0].get("allMessageSenderName"))[i],
-//                    Objects.requireNonNull(map[0].get("allMessageSendTime"))[i]);
-//
-//            Toast.makeText(HomeActivity.this, Objects.requireNonNull(map[0].get("allMessageId"))[i],Toast.LENGTH_SHORT).show();
-//
-//            messageslist.add(treeHoleMessage1);
-//        }
-//        TreeHoleMessageAdapter treeHoleMessageAdapter = new TreeHoleMessageAdapter(messageslist);
-//        recyclerView.setAdapter(treeHoleMessageAdapter);
-
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
@@ -142,12 +93,10 @@ public class HomeFragment extends Fragment {
                     Objects.requireNonNull(map[0].get("allMessageCollections"))[i],
                     Objects.requireNonNull(map[0].get("allMessageUpdateTime"))[i],
                     R.drawable.like,R.drawable.collection);
-//            Toast.makeText(HomeActivity.this, Objects.requireNonNull(map[0].get("allMessageId"))[i],Toast.LENGTH_SHORT).show();
-            Log.d("treeholeMEssage", Objects.requireNonNull(map[0].get("allMessageContent"))[i]);
-            treeHoleMessageAdapter.addMessage(treeHoleMessage1);
+                treeHoleMessageAdapter.addMessage(treeHoleMessage1);
         }
-//        LayoutAnimationController controller = new LayoutAnimationController(AnimationUtils.loadAnimation(context,R.anim.anim_treeholemessage));
-//        recyclerView.setLayoutAnimation(controller);
+        LayoutAnimationController controller = new LayoutAnimationController(AnimationUtils.loadAnimation(context,R.anim.anim_treeholemessage));
+        recyclerView.setLayoutAnimation(controller);
         recyclerView.setAdapter(treeHoleMessageAdapter);
         return view;
     }

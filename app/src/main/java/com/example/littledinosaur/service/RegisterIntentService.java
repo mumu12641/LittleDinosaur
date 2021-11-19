@@ -94,7 +94,7 @@ public class RegisterIntentService extends IntentService {
                 values.put("UserEmail",emailstr);
                 values.put("UserPassword",passwordstr);
                 values.put("UserName",emailstr);
-                values.put("Extra","0");
+                values.put("Extra","");
                 sqdb.insert("User",null,values);
 
             }

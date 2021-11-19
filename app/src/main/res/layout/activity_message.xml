@@ -31,158 +31,168 @@
             android:layout_gravity="center"
             android:textSize="20sp"/>
     </LinearLayout>
-    <RelativeLayout
-        android:id="@+id/layout_message"
-        android:layout_margin="5dp"
-        android:layout_below="@+id/titlebarline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/dragon1"/>
-            <TextView
-                android:id="@+id/messagesendername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Administrator"
-                android:textColor="@color/black"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"/>
-        </LinearLayout>
-
-
-    </RelativeLayout>
-    <TextView
-        android:layout_marginLeft="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2021/11/5发布"
-        android:textColor="@color/black"
-        android:id="@+id/messagesendtime"
-        android:layout_below="@+id/layout_message"/>
-
-    <RelativeLayout
-        android:id="@+id/sendercontent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/chatbubble"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_below="@id/messagesendtime">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:padding="5dp"
-            android:id="@+id/messageContent"
-            android:textSize="15sp"
-            android:text="✨✨✨LittleDinosaur✨✨✨各位友友们你们好！这里是由Infinity Studio开发的LittleDinosaur👏👏🉑🉑🎉🎉"
-            />
-        <LinearLayout
-            android:layout_margin="0dp"
-            android:paddingLeft="5dp"
-            android:layout_width="wrap_content"
-            android:layout_below="@+id/messageContent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/likesline">
-
-                <ImageView
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/likes"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/like" />
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/messagelikes"
-                    android:text="0"/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/commentsline">
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="60dp"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:id="@+id/comments"
-                    android:background="@drawable/comment"/>
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/messagecomments"
-                    android:text="0"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/collectionsline">
-                <ImageView
-                    android:id="@+id/collectionsimg"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="60dp"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:background="@drawable/collection"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/messagecollections"
-                    android:text="0" />
-            </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
-    <LinearLayout
-        android:id="@+id/gapline"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/tiltlegrey"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/sendercontent"
-        android:orientation="horizontal" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey"
-        android:layout_above="@+id/bottomline"/>
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshcomments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/gapline"
-        android:layout_above="@+id/bottomline">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/commentss"
-            android:layout_width="match_parent"
+        android:paddingBottom="50dp"
+        android:layout_below="@+id/titlebarline">
+        <ScrollView
+            android:id="@+id/scollerview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:ignore="DuplicateIds" />
+            >
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/layout_message"
+                    android:layout_margin="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/dragon1"/>
+                        <TextView
+                            android:id="@+id/messagesendername"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Administrator"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"/>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2021/11/5发布"
+                    android:textColor="@color/black"
+                    android:id="@+id/messagesendtime"
+                    android:layout_below="@+id/layout_message"/>
+
+                <RelativeLayout
+                    android:id="@+id/sendercontent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/chatbubble"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@id/messagesendtime">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:padding="5dp"
+                        android:id="@+id/messageContent"
+                        android:textSize="15sp"
+                        android:text="✨✨✨LittleDinosaur✨✨✨各位友友们你们好！这里是由Infinity Studio开发的LittleDinosaur👏👏🉑🉑🎉🎉"
+                        />
+                    <LinearLayout
+                        android:layout_margin="0dp"
+                        android:paddingLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@+id/messageContent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/likesline">
+
+                            <ImageView
+                                android:layout_marginLeft="5dp"
+                                android:id="@+id/likes"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/like" />
+                            <TextView
+                                android:layout_marginLeft="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/messagelikes"
+                                android:text="0"/>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/commentsline">
+                            <ImageView
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="60dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:id="@+id/comments"
+                                android:background="@drawable/comment"/>
+                            <TextView
+                                android:layout_marginLeft="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/messagecomments"
+                                android:text="0"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/collectionsline">
+                            <ImageView
+                                android:id="@+id/collectionsimg"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="60dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@drawable/collection"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:id="@+id/messagecollections"
+                                android:text="0" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/gapline"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/tiltlegrey"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/sendercontent"
+                    android:orientation="horizontal" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/commentss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/gapline"
+                    />
+            </RelativeLayout>
+        </ScrollView>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <RelativeLayout
         android:id="@+id/bottomline"
+        android:layout_below="@+id/scollerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="NotSibling">
         <EditText
             android:id="@+id/editcomment"
             android:layout_width="wrap_content"
