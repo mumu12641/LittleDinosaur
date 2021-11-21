@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.littledinosaur.ActivityCollector;
+import com.example.littledinosaur.ListLikesAndCollects;
 import com.example.littledinosaur.service.PostChangedNameService;
 import com.example.littledinosaur.R;
 import com.example.littledinosaur.UserDataBase;
@@ -31,7 +32,8 @@ public class MySettingActivity extends AppCompatActivity {
     private String Username;
     private String Useremail;
     private String Userpassword;
-//    private LinearLayout mysettingsline3;
+    private LinearLayout mysettingsline7;
+    private LinearLayout mysettingsline1;
     private EditText editName;
     private TextView save_btn;
     private ImageView return_btn;
@@ -51,6 +53,8 @@ public class MySettingActivity extends AppCompatActivity {
         exit_btn = findViewById(R.id.exitbtn);
         TextView email = findViewById(R.id.Useremail);
         save_btn = findViewById(R.id.save_btn);
+        mysettingsline7 = findViewById(R.id.mysettingsline7);
+        mysettingsline1 = findViewById(R.id.mysettingsline1);
 
         final Intent intent = getIntent();
         Bundle b = intent.getExtras();
@@ -71,6 +75,19 @@ public class MySettingActivity extends AppCompatActivity {
         }
         email.setText(Useremail);
 
+
+        mysettingsline7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MySettingActivity.this,"emm...这个功能我们正在努力开发呢",Toast.LENGTH_SHORT).show();
+            }
+        });
+        mysettingsline1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MySettingActivity.this,"emm...这个功能我们正在努力开发呢",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +131,7 @@ public class MySettingActivity extends AppCompatActivity {
         exit_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                ListLikesAndCollects.clearList();
                 SharedPreferences sp=MySettingActivity.this.getSharedPreferences("login",MODE_PRIVATE);
                 SharedPreferences.Editor edit = sp.edit();
                 edit.clear();
@@ -141,4 +159,5 @@ public class MySettingActivity extends AppCompatActivity {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
     }
+
 }

@@ -82,22 +82,24 @@
                     android:id="@+id/sendercontent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/chatbubble"
+                    android:background="@drawable/testbubble"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_below="@id/messagesendtime">
+
                     <TextView
+                        android:id="@+id/messageContent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:padding="5dp"
-                        android:id="@+id/messageContent"
-                        android:textSize="15sp"
+                        android:layout_margin="5dp"
                         android:text="✨✨✨LittleDinosaur✨✨✨各位友友们你们好！这里是由Infinity Studio开发的LittleDinosaur👏👏🉑🉑🎉🎉"
-                        />
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
                     <LinearLayout
                         android:layout_margin="0dp"
                         android:paddingLeft="5dp"
+                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_below="@+id/messageContent"
                         android:layout_height="wrap_content">

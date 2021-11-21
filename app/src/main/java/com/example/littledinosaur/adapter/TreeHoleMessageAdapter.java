@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.littledinosaur.HttpRequest;
+import com.example.littledinosaur.ListLikesAndCollects;
 import com.example.littledinosaur.R;
 import com.example.littledinosaur.activity.MessageActivity;
 
@@ -36,8 +37,6 @@ public class TreeHoleMessageAdapter extends RecyclerView.Adapter<TreeHoleMessage
 
     private Handler handler;
     class ViewHolder extends RecyclerView.ViewHolder{
-
-        public static final  int MSG =1;
         TextView messageid;
         TextView messagecontent;
         TextView messagetime;
@@ -107,6 +106,7 @@ public class TreeHoleMessageAdapter extends RecyclerView.Adapter<TreeHoleMessage
                         collectnum = new String(String.valueOf(a-1));
                         ViewHolder.this.messagecollections.setText(collectnum);
                         Toast.makeText(v.getContext(),"取消收藏",Toast.LENGTH_SHORT).show();
+                        ListLikesAndCollects.removeCollect(MessageId);
                     }else if(s1[0].equals("0")){
     //                    收藏成功
                         final String[] s6 = new String[1];
@@ -129,6 +129,7 @@ public class TreeHoleMessageAdapter extends RecyclerView.Adapter<TreeHoleMessage
                         ViewHolder.this.messagecollections.setText(collectnum);
                         ViewHolder.this.collectimg.setImageResource(R.drawable.collectsuccess);
                         Toast.makeText(v.getContext(),"收藏成功",Toast.LENGTH_SHORT).show();
+                        ListLikesAndCollects.addCollect(MessageId);
                     }
                     }
                 });
@@ -175,6 +176,7 @@ public class TreeHoleMessageAdapter extends RecyclerView.Adapter<TreeHoleMessage
                         likenum = new String(String.valueOf(a-1));
                         ViewHolder.this.messagelikes.setText(likenum);
                         Toast.makeText(v.getContext(),"取消点赞",Toast.LENGTH_SHORT).show();
+                        ListLikesAndCollects.removeLike(MessageId);
                     }
                     else{
 //                    点赞成功
@@ -198,6 +200,7 @@ public class TreeHoleMessageAdapter extends RecyclerView.Adapter<TreeHoleMessage
                         Toast.makeText(v.getContext(),"点赞成功",Toast.LENGTH_SHORT).show();
                         //点赞成功后发送信息到服务器
                         ViewHolder.this.likeimg.setImageResource(R.drawable.likessuccess);
+                        ListLikesAndCollects.addLike(MessageId);
                     }
                 }
             });

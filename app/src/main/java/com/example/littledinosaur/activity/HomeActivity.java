@@ -75,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 //        hometext  = findViewById(R.id.hometext);
 //        searchtext = findViewById(R.id.searchtext);
 //        mytext = findViewById(R.id.mytext);
+        titleBar = new TitleBar(HomeActivity.this,null);
         titleBar = findViewById(R.id.titlebar);
         frameLayout = findViewById(R.id.content);
 
@@ -84,7 +85,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         my.setOnClickListener(this);
         floatingActionButton.setOnClickListener(this);
 
-        titleBar = new TitleBar(HomeActivity.this,null);
+
         refreshLayout = findViewById(R.id.Refresh);
 //        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 //            @Override

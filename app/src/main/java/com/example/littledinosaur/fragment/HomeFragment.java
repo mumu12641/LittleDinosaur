@@ -20,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.littledinosaur.HttpRequest;
 import com.example.littledinosaur.JsonParse;
+import com.example.littledinosaur.ListLikesAndCollects;
 import com.example.littledinosaur.R;
 import com.example.littledinosaur.adapter.TreeHoleMessage;
 import com.example.littledinosaur.adapter.TreeHoleMessageAdapter;
@@ -83,6 +84,15 @@ public class HomeFragment extends Fragment {
         TreeHoleMessageAdapter treeHoleMessageAdapter = new TreeHoleMessageAdapter(messageslist,UserName,context);
         Log.d("Username",UserName);
         for(int i = 0; i< Objects.requireNonNull(map[0].get("allMessageId")).length; i++){
+            int likeid = R.drawable.like;
+            int collectid = R.drawable.collection;
+            if(ListLikesAndCollects.likes.contains(Objects.requireNonNull(map[0].get("allMessageId"))[i])){
+                likeid = R.drawable.likessuccess;
+            }
+            if(ListLikesAndCollects.collects.contains(Objects.requireNonNull(map[0].get("allMessageId"))[i])){
+                collectid = R.drawable.collectsuccess;
+            }
+
             TreeHoleMessage treeHoleMessage1 = new TreeHoleMessage(
                     Objects.requireNonNull(map[0].get("allMessageId"))[i],
                     Objects.requireNonNull(map[0].get("allMessageContent"))[i],
@@ -92,7 +102,7 @@ public class HomeFragment extends Fragment {
                     Objects.requireNonNull(map[0].get("allMessageComments"))[i],
                     Objects.requireNonNull(map[0].get("allMessageCollections"))[i],
                     Objects.requireNonNull(map[0].get("allMessageUpdateTime"))[i],
-                    R.drawable.like,R.drawable.collection);
+                    likeid,collectid);
                 treeHoleMessageAdapter.addMessage(treeHoleMessage1);
         }
         LayoutAnimationController controller = new LayoutAnimationController(AnimationUtils.loadAnimation(context,R.anim.anim_treeholemessage));
@@ -101,10 +111,6 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-//    private void initMessage(){
-////        TreeHoleMessage treeHoleMessage1 = new TreeHoleMessage("#00001","This is a test message","Administrator","2021/10/24");
-////        messageslist.add(treeHoleMessage1);
-//    }
 
 
 }
