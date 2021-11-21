@@ -4,20 +4,25 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.littledinosaur.ActivityCollector;
+import com.example.littledinosaur.ListLikesAndCollects;
 import com.example.littledinosaur.service.PostChangedNameService;
 import com.example.littledinosaur.R;
 import com.example.littledinosaur.UserDataBase;
@@ -27,11 +32,13 @@ public class MySettingActivity extends AppCompatActivity {
     private String Username;
     private String Useremail;
     private String Userpassword;
-//    private LinearLayout mysettingsline3;
+    private LinearLayout mysettingsline7;
+    private LinearLayout mysettingsline1;
     private EditText editName;
     private TextView save_btn;
     private ImageView return_btn;
     private String newname;
+    private Button exit_btn;
 
     @SuppressLint("WrongViewCast")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -43,8 +50,11 @@ public class MySettingActivity extends AppCompatActivity {
 
         editName = findViewById(R.id.Username);
         return_btn = findViewById(R.id.return_btn);
+        exit_btn = findViewById(R.id.exitbtn);
         TextView email = findViewById(R.id.Useremail);
         save_btn = findViewById(R.id.save_btn);
+        mysettingsline7 = findViewById(R.id.mysettingsline7);
+        mysettingsline1 = findViewById(R.id.mysettingsline1);
 
         final Intent intent = getIntent();
         Bundle b = intent.getExtras();
@@ -65,6 +75,19 @@ public class MySettingActivity extends AppCompatActivity {
         }
         email.setText(Useremail);
 
+
+        mysettingsline7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MySettingActivity.this,"emm...这个功能我们正在努力开发呢",Toast.LENGTH_SHORT).show();
+            }
+        });
+        mysettingsline1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MySettingActivity.this,"emm...这个功能我们正在努力开发呢",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +127,20 @@ public class MySettingActivity extends AppCompatActivity {
                 MySettingActivity.this.finish();
             }
         });
+
+        exit_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                ListLikesAndCollects.clearList();
+                SharedPreferences sp=MySettingActivity.this.getSharedPreferences("login",MODE_PRIVATE);
+                SharedPreferences.Editor edit = sp.edit();
+                edit.clear();
+                edit.apply();
+                Intent intent = new Intent(MySettingActivity.this, LoginActivity.class);
+                MySettingActivity.this.finish();
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -122,4 +159,5 @@ public class MySettingActivity extends AppCompatActivity {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
     }
+
 }

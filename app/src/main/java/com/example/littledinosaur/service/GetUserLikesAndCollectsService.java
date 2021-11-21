@@ -1,24 +1,22 @@
 package com.example.littledinosaur.service;
 
 import android.app.IntentService;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
 import com.example.littledinosaur.HttpRequest;
-import com.example.littledinosaur.JsonParse;
-import com.example.littledinosaur.UserDataBase;
+import com.example.littledinosaur.ListLikesAndCollects;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -27,18 +25,23 @@ import java.util.Objects;
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
-public class GetUserDataIntentService extends IntentService {
+public class GetUserLikesAndCollectsService extends IntentService {
+    private String likesList;
+    private String collectList;
+
+
+
     // TODO: Rename actions, choose action names that describe tasks that this
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
-    private static final String ACTION_FOO = "com.example.littledinosaur.action.FOO";
-    private static final String ACTION_BAZ = "com.example.littledinosaur.action.BAZ";
+    private static final String ACTION_FOO = "com.example.littledinosaur.service.action.FOO";
+    private static final String ACTION_BAZ = "com.example.littledinosaur.service.action.BAZ";
 
     // TODO: Rename parameters
-    private static final String EXTRA_PARAM1 = "com.example.littledinosaur.extra.PARAM1";
-    private static final String EXTRA_PARAM2 = "com.example.littledinosaur.extra.PARAM2";
-
-    public GetUserDataIntentService() {
-        super("GetUserDataIntentService");
+    private static final String EXTRA_PARAM1 = "com.example.littledinosaur.service.extra.PARAM1";
+    private static final String EXTRA_PARAM2 = "com.example.littledinosaur.service.extra.PARAM2";
+    private String UserName;
+    public GetUserLikesAndCollectsService() {
+        super("GetUserLikesAndCollectsService");
     }
 
     /**
@@ -49,7 +52,7 @@ public class GetUserDataIntentService extends IntentService {
      */
     // TODO: Customize helper method
     public static void startActionFoo(Context context, String param1, String param2) {
-        Intent intent = new Intent(context, GetUserDataIntentService.class);
+        Intent intent = new Intent(context, GetUserLikesAndCollectsService.class);
         intent.setAction(ACTION_FOO);
         intent.putExtra(EXTRA_PARAM1, param1);
         intent.putExtra(EXTRA_PARAM2, param2);
@@ -64,7 +67,7 @@ public class GetUserDataIntentService extends IntentService {
      */
     // TODO: Customize helper method
     public static void startActionBaz(Context context, String param1, String param2) {
-        Intent intent = new Intent(context, GetUserDataIntentService.class);
+        Intent intent = new Intent(context, GetUserLikesAndCollectsService.class);
         intent.setAction(ACTION_BAZ);
         intent.putExtra(EXTRA_PARAM1, param1);
         intent.putExtra(EXTRA_PARAM2, param2);
@@ -87,38 +90,48 @@ public class GetUserDataIntentService extends IntentService {
             }
         }
 
-        String string = HttpRequest.RequestHandler();
-        Map<String, String[]> dic = new HashMap<>();
-        JsonParse jsonParseHandler = new JsonParse(string);
+        Bundle bundle = null;
+        if (intent != null) {
+            bundle = intent.getExtras();
+            if (bundle != null) {
+                UserName = bundle.getString("Username");
+            }
+        }
+        final String[] s = new String[1];
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                 s[0] = HttpRequest.GetUserLikesAndCollects(UserName);
+            }
+        });
+        thread.start();
         try {
-//            解析获得的json文本
-            Log.d("Service","连接服务器服务，将网络用户数据写入本机数据库");
-            dic = jsonParseHandler.jsonParse();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e){
+            thread.join();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        UserDataBase myDatabase = new UserDataBase(this, "User.db", null, 1);
-        SQLiteDatabase sqdb = myDatabase.getWritableDatabase();
-        sqdb.execSQL("delete from User");
-        String[] ArrayEmail = dic.get("allEmail");
-        String[] ArrayPassword = dic.get("allPassword");
-        String[] ArrayName = dic.get("allName");
-        String[] ArrayExtra = dic.get("allExtra");
-        ContentValues contentValues = new ContentValues();
-        try{
-            for (int i = 0; i< Objects.requireNonNull(ArrayEmail).length; i++){
-                contentValues.put("UserEmail",ArrayEmail[i]);
-                contentValues.put("UserPassword", Objects.requireNonNull(ArrayPassword)[i]);
-                contentValues.put("UserName", Objects.requireNonNull(ArrayName)[i]);
-                contentValues.put("Extra", Objects.requireNonNull(ArrayExtra)[i]);
-                sqdb.insert("User",null,contentValues);
-                contentValues.clear();
-                Log.d("Service",ArrayEmail[i]);
-            }
-        } catch (NullPointerException e) {
+//        Log.d("pengbin",s[0]);
+//        {"likes": [], "collects": ["#00001"]}
+        try {
+            JSONObject jsonObject = new JSONObject(s[0]);
+             likesList = jsonObject.getString("likes");
+             collectList =  jsonObject.getString("collects");
+        } catch (JSONException e) {
             e.printStackTrace();
+        }
+        if(likesList.length()>3) {
+            for (int i = 2; i < likesList.length(); i += 9) {
+                String s2 = likesList.substring(i, i + 6);
+                ListLikesAndCollects.addLike(s2);
+//                Log.d("pengbin", s2);
+            }
+        }
+        if(collectList.length()>3) {
+            for (int i = 2; i < collectList.length(); i += 9) {
+                String s2 = collectList.substring(i, i + 6);
+                ListLikesAndCollects.addCollect(s2);
+//                Log.d("pengbin", s2);
+            }
         }
     }
 

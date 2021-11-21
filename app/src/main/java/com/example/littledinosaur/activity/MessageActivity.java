@@ -1,5 +1,6 @@
 package com.example.littledinosaur.activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,12 +13,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +56,7 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
     private RecyclerView recyclerView;
     private List<CommentMessage> list;
     private SwipeRefreshLayout refreshLayout;
+    private ScrollView scrollView;
     private String MessageId;
     private String UserName;
     private String IsLike;
@@ -68,6 +72,19 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
     private String str;
     private TreeHoleMessage treeHoleMessage;
 
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler(){
+//        处理一下点赞成功和收藏成功的耗时操作
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            if (msg.what == 1){
+                likeimg.setBackgroundResource(R.drawable.likessuccess);
+            }else if(msg.what ==2){
+                collectimg.setBackgroundResource(R.drawable.collectsuccess);
+            }
+        }
+    };
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +101,7 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
         sendcommentbtn = findViewById(R.id.sendcommentbtn);
         editcomment = findViewById(R.id.editcomment);
         refreshLayout = findViewById(R.id.refreshcomments);
+        scrollView = findViewById(R.id.scollerview);
         likes = findViewById(R.id.likesline);
         likeimg = findViewById(R.id.likes);
         collections = findViewById(R.id.collectionsline);
@@ -120,20 +138,38 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
                 str = HttpRequest.GetTreeHoleMessageContent(MessageId);
                 IsLike = HttpRequest.IsLikeOrCollectTheMessage(MessageId,UserName,"0");
                 IsCollect = HttpRequest.IsLikeOrCollectTheMessage(MessageId,UserName,"1");
+                if (IsLike.equals("1")){
+                    Message message = new Message();
+                    message.what = 1;
+                    handler.sendMessage(message);
+                }
+                if (IsCollect.equals("1")){
+                    Message message = new Message();
+                    message.what = 2;
+                    handler.sendMessage(message);
+                }
             }
         });
         thread.start();
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        Thread thread1 = new Thread(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void run() {
+                str = HttpRequest.GetTreeHoleMessageContent(MessageId);
+            }
+        });
+        thread1.start();
         try {
-            thread.join();
+            thread1.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if (IsLike.equals("1")){
-            likeimg.setBackgroundResource(R.drawable.likessuccess);
-        }
-        if (IsCollect.equals("1")){
-            collectimg.setBackgroundResource(R.drawable.collectsuccess);
-        }
+
         JsonParse jsonParse = new JsonParse(str);
         try {
             treeHoleMessage = jsonParse.jsonParseTreeHoleMessageContent();

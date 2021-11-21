@@ -20,6 +20,7 @@ public class TitleBar extends LinearLayout {
 //    自定义标题框控件
     public TitleBar(Context context, AttributeSet attributeSet){
         super(context, attributeSet);
+
         LayoutInflater.from(context).inflate(R.layout.titlebar,this);
     }
     public void setText(String string){

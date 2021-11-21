@@ -3,25 +3,54 @@ package com.example.littledinosaur.activity;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.littledinosaur.ActivityCollector;
+import com.example.littledinosaur.HttpRequest;
 import com.example.littledinosaur.R;
 import com.example.littledinosaur.UserDataBase;
+import com.example.littledinosaur.service.GetUserDataIntentService;
+import com.example.littledinosaur.service.GetUserLikesAndCollectsService;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+            SharedPreferences sp=this.getSharedPreferences("login",MODE_PRIVATE);
+            String email=sp.getString("UserEmail", "error");
+            String password=sp.getString("UserPassword", "error");
+            String name = sp.getString("UserName","error");
+            if (!email.equals("error")&&!password.equals("error")&&!name.equals("error")) {
+                Bundle bundle = new Bundle();
+                bundle.putString("Username", name);
+
+                Intent intent1 = new Intent(LoginActivity.this, GetUserLikesAndCollectsService.class);
+                intent1.putExtras(bundle);
+                startService(intent1);
+
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+
+                intent.putExtras(bundle);
+                startActivity(intent);
+                Toast.makeText(LoginActivity.this, "欢迎！！！", Toast.LENGTH_SHORT).show();
+                LoginActivity.this.finish();
+            }
         setContentView(R.layout.activity_login);
         ActivityCollector.addAcitivity(this);
         Button register = findViewById(R.id.btn3);
@@ -47,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 Cursor cursor = sqdb.query("User", null, "UserEmail=?", new String[]{Emailstr}, null, null, null);
                 if (cursor != null) {
                     while (cursor.moveToNext()) {
+//                        Toast.makeText(LoginActivity.this,cursor.getColumnIndex("UserName"),Toast.LENGTH_SHORT).show();
                         if (Passwordstr.equals(cursor.getString(cursor.getColumnIndex("UserPassword")))
                                 &&
                                 Emailstr.equals(cursor.getString((cursor.getColumnIndex("UserEmail"))))) {
@@ -63,10 +93,23 @@ public class LoginActivity extends AppCompatActivity {
 
 
                             flag = true;
+
+                            SharedPreferences sp = LoginActivity.this.getSharedPreferences("login",LoginActivity.MODE_PRIVATE);
+                            SharedPreferences.Editor edit = sp.edit();
+                            edit.putString("UserEmail", Emailstr);
+                            edit.putString("UserPassword",Passwordstr);
+                            edit.putString("UserName",cursor.getString(cursor.getColumnIndex("UserName")));
+                            edit.apply();
+
                             //进入主页面
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             Bundle bundle = new Bundle();
+
                             bundle.putString("Username",cursor.getString(cursor.getColumnIndex("UserName")));
+                            Intent intent1 = new Intent(LoginActivity.this, GetUserLikesAndCollectsService.class);
+                            intent1.putExtras(bundle);
+                            startService(intent1);
+
                             intent.putExtras(bundle);
                             startActivity(intent);
                             Toast.makeText(LoginActivity.this,"欢迎！！！",Toast.LENGTH_SHORT).show();
@@ -92,4 +135,5 @@ public class LoginActivity extends AppCompatActivity {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
     }
+
 }

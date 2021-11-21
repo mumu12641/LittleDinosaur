@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/lancnh"
         android:src="@drawable/dragon1"
+        android:transitionName="sharedView"
         android:layout_centerInParent="true"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,24 +35,5 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
     </LinearLayout>
-<!--    <LinearLayout-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/lancnh"-->
-<!--        android:layout_alignParentRight="true">-->
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/logo"-->
-<!--            android:id="@+id/logo"-->
-<!--            android:layout_gravity="center"/>-->
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:id="@+id/logotext"-->
-<!--            android:background="@drawable/studiotext"/>-->
-<!--    </LinearLayout>-->
 
 </RelativeLayout>

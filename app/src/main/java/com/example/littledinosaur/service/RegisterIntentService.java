@@ -86,19 +86,19 @@ public class RegisterIntentService extends IntentService {
             if (bundle != null) {
                 String emailstr = bundle.getString("emailstr");
                 String passwordstr = bundle.getString("passwordstr");
+
                 HttpRequest.PostHandler(emailstr, passwordstr,emailstr,"0");
                 UserDataBase myDatabase = new UserDataBase(this,"User.db",null,1);
+
                 SQLiteDatabase sqdb = myDatabase.getWritableDatabase();
                 ContentValues values = new ContentValues();
 //                插入数据
                 values.put("UserEmail",emailstr);
                 values.put("UserPassword",passwordstr);
                 values.put("UserName",emailstr);
-                values.put("Extra","0");
+                values.put("Extra","");
                 sqdb.insert("User",null,values);
-
             }
-
         }
     }
 
