@@ -92,14 +92,14 @@ public class GetUserDataIntentService extends IntentService {
         JsonParse jsonParseHandler = new JsonParse(string);
         try {
 //            解析获得的json文本
-            Log.d("Service","连接服务器服务，将网络用户数据写入本机数据库");
+//            Log.d("Service","连接服务器服务，将网络用户数据写入本机数据库");
             dic = jsonParseHandler.jsonParse();
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (NullPointerException e){
             e.printStackTrace();
         }
-        UserDataBase myDatabase = new UserDataBase(this, "User.db", null, 1);
+        UserDataBase myDatabase = new UserDataBase(this, "User.db", null, 2);
         SQLiteDatabase sqdb = myDatabase.getWritableDatabase();
         sqdb.execSQL("delete from User");
         String[] ArrayEmail = dic.get("allEmail");
@@ -109,13 +109,12 @@ public class GetUserDataIntentService extends IntentService {
         ContentValues contentValues = new ContentValues();
         try{
             for (int i = 0; i< Objects.requireNonNull(ArrayEmail).length; i++){
-                contentValues.put("UserEmail",ArrayEmail[i]);
-                contentValues.put("UserPassword", Objects.requireNonNull(ArrayPassword)[i]);
-                contentValues.put("UserName", Objects.requireNonNull(ArrayName)[i]);
-                contentValues.put("Extra", Objects.requireNonNull(ArrayExtra)[i]);
-                sqdb.insert("User",null,contentValues);
-                contentValues.clear();
-                Log.d("Service",ArrayEmail[i]);
+                assert ArrayPassword != null;
+                assert ArrayName != null;
+                assert ArrayExtra != null;
+                sqdb.execSQL("insert into User (UserEmail,UserPassword,UserName,Extra) values(?,?,?,?)",
+                        new String[] {ArrayEmail[i],ArrayPassword[i],ArrayName[i],ArrayExtra[i]});
+//                Log.d("Service",ArrayPassword[i]);
             }
         } catch (NullPointerException e) {
             e.printStackTrace();

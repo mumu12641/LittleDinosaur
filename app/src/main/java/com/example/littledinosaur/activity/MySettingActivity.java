@@ -62,7 +62,7 @@ public class MySettingActivity extends AppCompatActivity {
         Username = b.getString("Username");
         newname = Username;
         editName.setText(Username);
-        UserDataBase dataBase = new UserDataBase(MySettingActivity.this,"User.db",null,1);
+        UserDataBase dataBase = new UserDataBase(MySettingActivity.this,"User.db",null,2);
         SQLiteDatabase sq = dataBase.getReadableDatabase();
         Cursor cursor = sq.query("User", null, null, null, null, null, null);
         if (cursor != null) {

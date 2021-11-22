@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.ColorSpace;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -45,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                判断是否重复注册
                 String emailstr = textemail.getText().toString();
-                UserDataBase myDatabase = new UserDataBase(RegisterActivity.this,"User.db",null,1);
+                UserDataBase myDatabase = new UserDataBase(RegisterActivity.this,"User.db",null,2);
                 SQLiteDatabase sqdb = myDatabase.getReadableDatabase();
                 Cursor cursor = sqdb.query("User",null,null, null,null,null,null);
                 if (cursor != null) {
@@ -67,6 +68,14 @@ public class RegisterActivity extends AppCompatActivity {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getkey.setText("发送验证码中~~~");
+                                    getkey.setBackgroundResource(R.drawable.already_bg_btn);
+                                    Toast.makeText(RegisterActivity.this,"获取验证码中~~~",Toast.LENGTH_SHORT).show();
+                                }
+                            });
 //                        获取验证码
                             String emailstr = textemail.getText().toString();
                             KeyCode[0] = HttpRequest.GetKeyCode(emailstr);
@@ -98,6 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivity(intent1);
                 } else{
                     Toast.makeText(RegisterActivity.this,"验证码输入错误，注册失败",Toast.LENGTH_SHORT).show();
+                    getkey.setClickable(false);
                     textemail.setText(null);
                     textpassword.setText(null);
                     textkey.setText(null);

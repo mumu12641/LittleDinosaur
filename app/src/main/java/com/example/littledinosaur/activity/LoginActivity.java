@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!isOpenNetwork()){
+            LoginActivity.this.finish();
+        }
             SharedPreferences sp=this.getSharedPreferences("login",MODE_PRIVATE);
             String email=sp.getString("UserEmail", "error");
             String password=sp.getString("UserPassword", "error");
@@ -39,11 +43,9 @@ public class LoginActivity extends AppCompatActivity {
             if (!email.equals("error")&&!password.equals("error")&&!name.equals("error")) {
                 Bundle bundle = new Bundle();
                 bundle.putString("Username", name);
-
                 Intent intent1 = new Intent(LoginActivity.this, GetUserLikesAndCollectsService.class);
                 intent1.putExtras(bundle);
                 startService(intent1);
-
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
 
                 intent.putExtras(bundle);
@@ -71,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                 boolean flag = false;
                 String Emailstr = EmailText.getText().toString();
                 String Passwordstr = PasswordText.getText().toString();
-                UserDataBase myDatabase = new UserDataBase(LoginActivity.this,"User.db",null,1);
+                UserDataBase myDatabase = new UserDataBase(LoginActivity.this,"User.db",null,2);
                 SQLiteDatabase sqdb = myDatabase.getReadableDatabase();
                 Cursor cursor = sqdb.query("User", null, "UserEmail=?", new String[]{Emailstr}, null, null, null);
                 if (cursor != null) {
@@ -135,5 +137,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
     }
-
+    /**  * 对网络连接状态进行判断  * @return  true, 可用； false， 不可用  */
+    private boolean isOpenNetwork() {
+        ConnectivityManager connManager = (ConnectivityManager)getSystemService(LoginActivity.CONNECTIVITY_SERVICE);
+        if(connManager.getActiveNetworkInfo() != null) {
+            return connManager.getActiveNetworkInfo().isAvailable();
+        }  return false;
+    }
 }

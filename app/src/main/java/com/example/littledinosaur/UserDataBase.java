@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 public class UserDataBase extends SQLiteOpenHelper {
     //    建表语句
-    private static final String Creat_db = "create table User(" + "id integer primary key autoincrement," + "UserEmail text," + "UserPassword integer,"+"UserName text,"+"Extra text)";
+    private static final String Creat_db = "create table User(" + "id integer primary key autoincrement," + "UserEmail text," + "UserPassword text,"+"UserName text,"+"Extra text)";
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

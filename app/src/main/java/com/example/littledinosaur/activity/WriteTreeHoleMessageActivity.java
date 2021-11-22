@@ -23,7 +23,6 @@ import java.util.Calendar;
 
 public class WriteTreeHoleMessageActivity extends AppCompatActivity {
 
-    private ReturnBar returnBar;
     private String Username;
     private FloatingActionButton floatingActionButton;
     private String messagecontent;
@@ -36,11 +35,9 @@ public class WriteTreeHoleMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_tree_hole_message);
 
-        returnBar = findViewById(R.id.line1);
-        returnbtn = returnBar.findViewById(R.id.img);
+        returnbtn = findViewById(R.id.img);
         floatingActionButton = findViewById(R.id.commit_btn);
         editText = findViewById(R.id.editmessagecontent);
-        returnBar.setText("写树洞");
 
         final Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -49,7 +46,13 @@ public class WriteTreeHoleMessageActivity extends AppCompatActivity {
 //        Toast.makeText(WriteTreeHoleMessageActivity.this,Username,Toast.LENGTH_SHORT).show();
 
 
-
+        returnbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resultcode = 2;
+                WriteTreeHoleMessageActivity.this.finish();
+            }
+        });
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +65,11 @@ public class WriteTreeHoleMessageActivity extends AppCompatActivity {
                     Calendar calendar = Calendar.getInstance();
                     long unixTime = calendar.getTimeInMillis();//这是时间戳
                     String nowTime = calendar.get(Calendar.YEAR) +
+                            "/" + (calendar.get(Calendar.MONTH) + 1) +
+                            "/" + calendar.get(Calendar.DAY_OF_MONTH) + " " +
+                            calendar.get(Calendar.HOUR_OF_DAY) + ":" +
+                            calendar.get(Calendar.MINUTE);
+                    String sendtime = calendar.get(Calendar.YEAR) +
                             "/" + (calendar.get(Calendar.MONTH) + 1) +
                             "/" + calendar.get(Calendar.DAY_OF_MONTH);
 
@@ -80,14 +88,13 @@ public class WriteTreeHoleMessageActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     Log.d("WriteTreeHoleMessage",nowTime);
-
                     Log.d("WriteTreeHoleMessage",messageid[0]);
                     Intent intent1 = new Intent(WriteTreeHoleMessageActivity.this, PostTreeHoleMessageService.class);
                     Bundle bundle1 = new Bundle();
                     bundle1.putString("messageId", messageid[0]);
                     bundle1.putString("messageSenderName", Username);
                     bundle1.putString("messageContent", messagecontent);
-                    bundle1.putString("messageSendTime", nowTime);
+                    bundle1.putString("messageSendTime", sendtime);
                     bundle1.putString("messageLikes","0");
                     bundle1.putString("messageComments","0");
                     bundle1.putString("messageCollections","0");
@@ -99,7 +106,7 @@ public class WriteTreeHoleMessageActivity extends AppCompatActivity {
                     Intent newIntent = new Intent(WriteTreeHoleMessageActivity.this, HomeActivity.class);
                     newIntent.putExtra("result", result);//这里可以是任意要传回给A的业务数据
                     resultcode = 1;
-                    Toast.makeText(WriteTreeHoleMessageActivity.this,"发布成功"+messagecontent,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(WriteTreeHoleMessageActivity.this,"发布成功"+messagecontent,Toast.LENGTH_SHORT).show();
                     WriteTreeHoleMessageActivity.this.finish();
 
 
