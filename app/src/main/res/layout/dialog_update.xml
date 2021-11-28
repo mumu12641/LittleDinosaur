@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#646464"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:background="@drawable/update_dialog"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:id="@+id/update_line1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/update_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/dragon1"/>
+        <TextView
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新版本更新~~"
+            android:layout_toRightOf="@+id/update_icon"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/update_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="新版本来袭~~~速速更新看看我们的开发者又带来什么新东西叭"
+        android:layout_below="@+id/update_line1"
+        android:textColor="@color/black"
+        android:layout_margin="10dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/update_text">
+        <Button
+            android:id="@+id/update_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="前去更新"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/bg_update_btn"
+            />
+    </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

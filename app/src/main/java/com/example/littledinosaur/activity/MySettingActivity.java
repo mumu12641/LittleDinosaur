@@ -1,17 +1,22 @@
 package com.example.littledinosaur.activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -22,10 +27,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.littledinosaur.ActivityCollector;
+import com.example.littledinosaur.HttpRequest;
 import com.example.littledinosaur.ListLikesAndCollects;
 import com.example.littledinosaur.service.PostChangedNameService;
 import com.example.littledinosaur.R;
 import com.example.littledinosaur.UserDataBase;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MySettingActivity extends AppCompatActivity {
 
@@ -39,7 +48,17 @@ public class MySettingActivity extends AppCompatActivity {
     private ImageView return_btn;
     private String newname;
     private Button exit_btn;
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            if (msg.what == 1){
 
+            }else if(msg.what ==2){
+
+            }
+        }
+    };
     @SuppressLint("WrongViewCast")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -96,7 +115,7 @@ public class MySettingActivity extends AppCompatActivity {
                 if(!newname.equals(Username)){
 
 //                    将新修改的名字写入本地数据库
-                    UserDataBase userDataBase = new UserDataBase(MySettingActivity.this,"User.db",null,1);
+                    UserDataBase userDataBase = new UserDataBase(MySettingActivity.this,"User.db",null,2);
                     SQLiteDatabase sqLiteDatabase = userDataBase.getWritableDatabase();
 //                    values.put("Userid","6285");
 //                    sqdb.update("User",values,"password=?",new String[]{"123"})
@@ -143,7 +162,6 @@ public class MySettingActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -159,5 +177,4 @@ public class MySettingActivity extends AppCompatActivity {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
     }
-
 }

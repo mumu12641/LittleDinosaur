@@ -103,9 +103,7 @@ public class HttpRequest {
     public static void changeName(String newname, String Useremail){
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = new FormBody.Builder().add("UserEmail",Useremail).add("NewName",newname).build();
-//        Request request = new Request.Builder().url("http://"+IP+":6363/ChangeName").post(requestBody).build();
         Request request = new Request.Builder().url("http://"+IP+":"+Port+"/ChangeName").post(requestBody).build();
-//        Request request = new Request.Builder().url("http://10.12.29.213:6363/ChangeName").post(requestBody).build();
         Response response = null;
         try {
             response = client.newCall(request).execute();
@@ -323,6 +321,27 @@ public class HttpRequest {
         RequestBody requestBody = new FormBody.Builder().add("UserName",UserName)
                 .build();
         Request request = new Request.Builder().url("http://"+IP+":"+Port+"/GetUserLikesAndCollects").post(requestBody).build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String string = null;
+        try {
+            if (response != null){
+                string  = Objects.requireNonNull(Objects.requireNonNull(response).body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return string;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String GetNowApkVersion(){
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url("http://"+IP+":"+Port+"/GetApkVersion").build();
         Response response = null;
         try {
             response = client.newCall(request).execute();

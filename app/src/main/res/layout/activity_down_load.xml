@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/download_line1"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/dragon1"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/nowversion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Version 1.0"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/newversion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新版本更新"
+            android:layout_gravity="center"
+            android:textColor="#D0021B"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/download_line2"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/download_line1">
+        <TextView
+            android:id="@+id/file_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LittleDinosaur"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/black" />
+        <ProgressBar
+            android:layout_below="@+id/download_line2"
+            android:id="@+id/pb_update"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            style="@style/MyProgressBar"
+            android:max="100"
+            android:progress="0"
+            />
+
+        <TextView
+            android:id="@+id/progress"
+            android:layout_below="@+id/pb_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:text="0%"/>
+        <TextView
+            android:layout_below="@+id/progress"
+            android:id="@+id/down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="30dp"
+            android:background="@drawable/bg_btn"
+            android:paddingRight="30dp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:text="立即下载"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/logo"
+            android:foregroundGravity="center"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="10sp"
+            android:text="Copyright © 2021-2022 Infinity Studio"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Rights Reserved"
+            android:textSize="10sp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+</RelativeLayout>
