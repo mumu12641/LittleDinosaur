@@ -88,7 +88,7 @@ public class RegisterIntentService extends IntentService {
                 String passwordstr = bundle.getString("passwordstr");
 
                 HttpRequest.PostHandler(emailstr, passwordstr,emailstr,"0");
-                UserDataBase myDatabase = new UserDataBase(this,"User.db",null,1);
+                UserDataBase myDatabase = new UserDataBase(this,"User.db",null,2);
 
                 SQLiteDatabase sqdb = myDatabase.getWritableDatabase();
                 ContentValues values = new ContentValues();

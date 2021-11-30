@@ -1,12 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Coming soon"
-        android:textColor="@color/black"
-        android:layout_centerInParent="true"
-        android:textSize="20sp"/>
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Coming soon"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:textSize="20sp"/>-->
+    <RelativeLayout
+        android:layout_margin="25dp"
+        android:background="@drawable/edit_bk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:id="@+id/calendar_line1"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/calendartext1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="2021年11月 农历十月二十六"
+                android:textSize="10sp" />
+        </LinearLayout>
+       <LinearLayout
+           android:layout_below="@+id/calendar_line1"
+           android:id="@+id/calendar_line2"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
+           <TextView
+               android:id="@+id/calendartext2"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:text="30"
+               android:textColor="@color/black"
+               android:textSize="75sp"
+               app:fontFamily="monospace" />
+       </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/calendar_line3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/calendar_line2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/calendartext3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="星期二 | Tuesday"
+                android:textSize="10sp"
+                app:fontFamily="monospace" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/calendar_line3"
+            android:id="@+id/calendar_line4"
+            android:orientation="vertical"
+            android:background="@drawable/motto_bk">
+
+            <TextView
+                android:id="@+id/mottotext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="世上只有一种英雄主义，就是在认清生活真相之后依然热爱生活"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:fontFamily="monospace" />
+
+            <TextView
+                android:id="@+id/mottoauther"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+               android:text="--罗曼罗兰"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:fontFamily="monospace" />
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

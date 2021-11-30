@@ -11,21 +11,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.littledinosaur.ActivityCollector;
-import com.example.littledinosaur.HttpRequest;
 import com.example.littledinosaur.R;
 import com.example.littledinosaur.UserDataBase;
-import com.example.littledinosaur.service.GetUserDataIntentService;
 import com.example.littledinosaur.service.GetUserLikesAndCollectsService;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,11 +30,11 @@ public class LoginActivity extends AppCompatActivity {
         if (!isOpenNetwork()){
             LoginActivity.this.finish();
         }
-            SharedPreferences sp=this.getSharedPreferences("login",MODE_PRIVATE);
+            SharedPreferences sp=this.getSharedPreferences("login", Context.MODE_PRIVATE);
             String email=sp.getString("UserEmail", "error");
             String password=sp.getString("UserPassword", "error");
             String name = sp.getString("UserName","error");
-            if (!email.equals("error")&&!password.equals("error")&&!name.equals("error")) {
+        if (!email.equals("error")&&!password.equals("error")&&!name.equals("error")) {
                 Bundle bundle = new Bundle();
                 bundle.putString("Username", name);
                 Intent intent1 = new Intent(LoginActivity.this, GetUserLikesAndCollectsService.class);

@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.littledinosaur.R;
+import com.example.littledinosaur.activity.AboutActivity;
 import com.example.littledinosaur.activity.LoginActivity;
 import com.example.littledinosaur.activity.MyMessageAcitivity;
 import com.example.littledinosaur.activity.MySettingActivity;
@@ -98,7 +99,9 @@ public class MyFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent3);
                 break;
             case R.id.line5:
-                Toast.makeText(context,"emm...这个功能我们正在努力开发呢",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context,"emm...这个功能我们正在努力开发呢",Toast.LENGTH_SHORT).show();
+                Intent intent4 = new Intent(context, AboutActivity.class);
+                startActivity(intent4);
                 break;
         }
     }

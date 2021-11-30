@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AboutActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/titlebar"
+        android:layout_height="40dp"
+        android:background="#EBEBEB"
+        tools:ignore="UselessParent">
+        <ImageView
+            android:id="@+id/about_return_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:background="@drawable/back" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titlebar"
+        android:id="@+id/about_line1"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_width="255dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/aboutlogo"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/nowversion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="version 1.0.1"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+    <ExpandableListView
+        android:layout_marginTop="50dp"
+        android:id="@+id/about_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/about_line1"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_above="@+id/bottom"/>
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/logo"
+            android:foregroundGravity="center"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="10sp"
+            android:text="Copyright © 2021-2022 Infinity Studio"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Rights Reserved"
+            android:textSize="10sp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+</RelativeLayout>
