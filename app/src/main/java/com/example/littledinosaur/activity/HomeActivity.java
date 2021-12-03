@@ -2,7 +2,6 @@ package com.example.littledinosaur.activity;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,7 +12,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -21,7 +19,6 @@ import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.littledinosaur.ActivityCollector;
 import com.example.littledinosaur.fragment.HomeFragment;
 import com.example.littledinosaur.fragment.MyFragment;
 import com.example.littledinosaur.R;
@@ -63,7 +60,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        ActivityCollector.addAcitivity(this);
 
         scroller = new Scroller(HomeActivity.this);
 
@@ -134,6 +130,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 titleBar.setVisibility(View.VISIBLE);
                 refreshLayout.setVisibility(View.VISIBLE);
                 floatingActionButton.setVisibility(View.VISIBLE);
+                refreshLayout.setEnabled(true);
                 titleBar.setText("首页");
                 if (home.isSelected()){
                     home.setImageResource(R.drawable.homeclicked1);
@@ -151,6 +148,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.search:
                 setSelected();
                 search.setSelected(true);
+                refreshLayout.setEnabled(false);
                 titleBar.setVisibility(View.VISIBLE);
                // refreshLayout.setVisibility(INVISIBLE);
                 titleBar.setText("发现");
@@ -161,7 +159,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 hideAllFragment(transaction);
                 if (searchFragment == null){
-                    searchFragment = new SearchFragment(HomeActivity.this);
+                    searchFragment = new SearchFragment(HomeActivity.this,HomeActivity.this,UserName);
                     transaction.add(R.id.content,searchFragment);
                 }else{
                     transaction.show(searchFragment);
@@ -171,6 +169,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 setSelected();
                 my.setSelected(true);
                 titleBar.setText("我的");
+                refreshLayout.setEnabled(false);
                 floatingActionButton.setVisibility(INVISIBLE);
               //  refreshLayout.setVisibility(INVISIBLE);
                 if (my.isSelected()){
@@ -222,7 +221,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityCollector.removeActivity(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.ColorSpace;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.littledinosaur.ActivityCollector;
 import com.example.littledinosaur.HttpRequest;
 import com.example.littledinosaur.R;
 import com.example.littledinosaur.service.RegisterIntentService;
@@ -32,7 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        ActivityCollector.addAcitivity(this);
         final String[] KeyCode = new String[1];
         final boolean[] flag = {true};
         textemail = findViewById(R.id.textemail);
@@ -121,6 +118,5 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityCollector.removeActivity(this);
     }
 }

@@ -115,4 +115,22 @@
             android:layout_gravity="center"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/download_line2"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tishi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FC0303"
+            android:text="下载完成后请下拉通知栏更新，如果不小心删除了通知就请前往手机文件管理的下载界面安装安装包"
+            android:textSize="15sp"
+            />
+
+    </LinearLayout>
 </RelativeLayout>

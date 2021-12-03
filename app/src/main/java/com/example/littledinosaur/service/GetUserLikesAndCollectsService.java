@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ import java.util.List;
 public class GetUserLikesAndCollectsService extends IntentService {
     private String likesList;
     private String collectList;
+    private String notesList;
 
 
 
@@ -116,6 +118,8 @@ public class GetUserLikesAndCollectsService extends IntentService {
             JSONObject jsonObject = new JSONObject(s[0]);
              likesList = jsonObject.getString("likes");
              collectList =  jsonObject.getString("collects");
+             notesList = jsonObject.getString("notes");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -133,6 +137,23 @@ public class GetUserLikesAndCollectsService extends IntentService {
 //                Log.d("pengbin", s2);
             }
         }
+        String s1 = notesList;
+//        Log.d("pengbin", s1);
+        List list = Arrays.asList(s1.replace("\"","").split("[\\[\\]]|,"));
+        Log.d("pengbin", String.valueOf(list));
+        for(int i=1;i<list.size();i++){
+            ListLikesAndCollects.addnotes((String) list.get(i));
+        }
+        Log.d("pengbin", String.valueOf(ListLikesAndCollects.notes));
+//        ListLikesAndCollects.addnotes((String) list.get(1));
+//        ListLikesAndCollects.addnotes((String) list.get(2));
+//        if(notesList.length()>3) {
+//            for (int i = 2; i < notesList.length(); i += 9) {
+//                String s2 = notesList.substring(i, i + 6);
+//                ListLikesAndCollects.addnotes(s2);
+////                Log.d("pengbin", s2);
+//            }
+//        }
     }
 
     /**

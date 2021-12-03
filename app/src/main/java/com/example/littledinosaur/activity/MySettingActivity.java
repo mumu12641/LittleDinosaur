@@ -8,15 +8,12 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -26,15 +23,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.littledinosaur.ActivityCollector;
-import com.example.littledinosaur.HttpRequest;
 import com.example.littledinosaur.ListLikesAndCollects;
 import com.example.littledinosaur.service.PostChangedNameService;
 import com.example.littledinosaur.R;
 import com.example.littledinosaur.UserDataBase;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MySettingActivity extends AppCompatActivity {
 
@@ -48,6 +43,7 @@ public class MySettingActivity extends AppCompatActivity {
     private ImageView return_btn;
     private String newname;
     private Button exit_btn;
+    private List<String> nameList = new ArrayList<>();
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
         @Override
@@ -65,7 +61,6 @@ public class MySettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_setting);
-        ActivityCollector.addAcitivity(this);
 
         editName = findViewById(R.id.Username);
         return_btn = findViewById(R.id.return_btn);
@@ -79,6 +74,7 @@ public class MySettingActivity extends AppCompatActivity {
         Bundle b = intent.getExtras();
         assert b != null;
         Username = b.getString("Username");
+        nameList.add(Username);
         newname = Username;
         editName.setText(Username);
         UserDataBase dataBase = new UserDataBase(MySettingActivity.this,"User.db",null,2);
@@ -89,6 +85,8 @@ public class MySettingActivity extends AppCompatActivity {
                 if (cursor.getString(cursor.getColumnIndex("UserName")).equals(Username)){
                     Useremail = cursor.getString(cursor.getColumnIndex("UserEmail"));
                     Userpassword = cursor.getString(cursor.getColumnIndex("UserPassword"));
+                }else{
+                    nameList.add(cursor.getString(cursor.getColumnIndex("UserName")));
                 }
             }
         }
@@ -112,6 +110,12 @@ public class MySettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 newname = editName.getText().toString();
+                if(nameList.contains(newname)){
+                    Toast.makeText(MySettingActivity.this,"改名字已经被使用了嗷，请换一个试试叭~",Toast.LENGTH_SHORT).show();
+                    newname = Username;
+                    editName.setText(Username);
+                    return;
+                }
                 if(!newname.equals(Username)){
 
 //                    将新修改的名字写入本地数据库
@@ -175,6 +179,5 @@ public class MySettingActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityCollector.removeActivity(this);
     }
 }

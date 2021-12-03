@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.littledinosaur.ActivityCollector;
 import com.example.littledinosaur.R;
 import com.example.littledinosaur.UserDataBase;
 import com.example.littledinosaur.service.GetUserLikesAndCollectsService;
@@ -48,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.this.finish();
             }
         setContentView(R.layout.activity_login);
-        ActivityCollector.addAcitivity(this);
         Button register = findViewById(R.id.btn3);
         Button login = findViewById(R.id.btn2);
         final EditText EmailText = findViewById(R.id.EmailText);
@@ -129,7 +127,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityCollector.removeActivity(this);
     }
     /**  * 对网络连接状态进行判断  * @return  true, 可用； false， 不可用  */
     private boolean isOpenNetwork() {

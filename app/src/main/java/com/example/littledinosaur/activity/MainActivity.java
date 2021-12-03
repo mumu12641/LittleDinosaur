@@ -8,7 +8,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,10 +21,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.littledinosaur.ActivityCollector;
 import com.example.littledinosaur.HttpRequest;
 import com.example.littledinosaur.service.GetUserDataIntentService;
 import com.example.littledinosaur.R;
@@ -54,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imageView = findViewById(R.id.lancnh);
-        ActivityCollector.addAcitivity(this);
         if (!isOpenNetwork()){
             Toast.makeText(MainActivity.this,"网络未连接，即将退出应用",Toast.LENGTH_SHORT).show();
             StartAnimation();
@@ -137,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityCollector.removeActivity(this);
     }
     /**  * 对网络连接状态进行判断  * @return  true, 可用； false， 不可用  */
     private boolean isOpenNetwork() {
@@ -181,44 +176,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    List<String> mPermissionList = new ArrayList<>();
-
-    // private ImageView welcomeImg = null;
-    private static final int PERMISSION_REQUEST = 1;
-// 检查权限
-
-    private void checkPermission() {
-        mPermissionList.clear();
-        //判断哪些权限未授予
-        for (int i = 0; i < permissions.length; i++) {
-            if (ContextCompat.checkSelfPermission(this, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
-                mPermissionList.add(permissions[i]);
-            }
-        }
-        /**
-         * 判断是否为空
-         */
-        if (mPermissionList.isEmpty()) {//未授予的权限为空，表示都授予了
-        } else {//请求权限方法
-            String[] permissions = mPermissionList.toArray(new String[mPermissionList.size()]);//将List转为数组
-            ActivityCompat.requestPermissions(MainActivity.this, permissions, PERMISSION_REQUEST);
-        }
-    }
-    /**
-     * 响应授权
-     * 这里不管用户是否拒绝，都进入首页，不再重复申请权限
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_REQUEST:
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-                break;
-        }
-    }
+//    String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//    List<String> mPermissionList = new ArrayList<>();
+//
+//    // private ImageView welcomeImg = null;
+//    private static final int PERMISSION_REQUEST = 1;
+//// 检查权限
+//
+//    private void checkPermission() {
+//        mPermissionList.clear();
+//        //判断哪些权限未授予
+//        for (int i = 0; i < permissions.length; i++) {
+//            if (ContextCompat.checkSelfPermission(this, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
+//                mPermissionList.add(permissions[i]);
+//            }
+//        }
+//        /**
+//         * 判断是否为空
+//         */
+//        if (mPermissionList.isEmpty()) {//未授予的权限为空，表示都授予了
+//        } else {//请求权限方法
+//            String[] permissions = mPermissionList.toArray(new String[mPermissionList.size()]);//将List转为数组
+//            ActivityCompat.requestPermissions(MainActivity.this, permissions, PERMISSION_REQUEST);
+//        }
+//    }
+//    /**
+//     * 响应授权
+//     * 这里不管用户是否拒绝，都进入首页，不再重复申请权限
+//     */
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode) {
+//            case PERMISSION_REQUEST:
+//                break;
+//            default:
+//                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//                break;
+//        }
+//    }
 
 }

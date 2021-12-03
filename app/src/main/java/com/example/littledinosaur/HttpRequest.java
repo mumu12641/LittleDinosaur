@@ -358,4 +358,31 @@ public class HttpRequest {
         }
         return string;
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String AddOrDeleteNote(String Username,String flag,String note){
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("UserName",Username)
+                .add("Flag",flag)
+                .add("Note",note)
+                .build();
+        Request request = new Request.Builder().url("http://"+IP+":"+Port+"/AddOrDeleteNote").post(requestBody).build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String string = null;
+        try {
+            if (response != null){
+                string  = Objects.requireNonNull(Objects.requireNonNull(response).body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return string;
+    }
+
 }

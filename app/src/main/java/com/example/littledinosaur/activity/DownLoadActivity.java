@@ -35,6 +35,7 @@ public class DownLoadActivity extends AppCompatActivity implements View.OnClickL
     private ProgressBar pb_update;
     private DownloadManager downloadManager;
     private DownloadManager.Request request;
+    private TextView tishi;
     public static String downloadUrl = "http://101.201.50.108:3535/APKDownload";
     Timer timer;
     long id;
@@ -65,6 +66,8 @@ public class DownLoadActivity extends AppCompatActivity implements View.OnClickL
         file_name = (TextView) findViewById(R.id.file_name);
         nowversion = findViewById(R.id.nowversion);
         pb_update = findViewById(R.id.pb_update);
+        tishi = findViewById(R.id.tishi);
+        tishi.setVisibility(View.INVISIBLE);
 
         String verName = null;
         try {
@@ -104,6 +107,7 @@ public class DownLoadActivity extends AppCompatActivity implements View.OnClickL
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                tishi.setVisibility(View.VISIBLE);
                                 Toast.makeText(DownLoadActivity.this,"下载完成，请下滑状态栏进行安装哟~~~",Toast.LENGTH_SHORT).show();
                             }
                         });
