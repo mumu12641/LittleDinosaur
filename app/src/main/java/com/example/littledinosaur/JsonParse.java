@@ -1,7 +1,11 @@
 package com.example.littledinosaur;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.littledinosaur.activity.MessageActivity;
 import com.example.littledinosaur.adapter.CommentMessage;
 import com.example.littledinosaur.adapter.TreeHoleMessage;
 
@@ -16,6 +20,9 @@ import java.util.Map;
 
 public class JsonParse {
     private static String JsonText;
+    final int[] iconid = {R.drawable.icon0,R.drawable.icon1,R.drawable.icon2,R.drawable.icon3,R.drawable.icon4,
+            R.drawable.icon5,R.drawable.icon6,R.drawable.icon7,R.drawable.icon8,R.drawable.icon9,
+            R.drawable.icon10,R.drawable.icon11};
 
     public JsonParse(String data){
         JsonText = data;
@@ -104,7 +111,7 @@ public class JsonParse {
         return treeHoleMessage;
     }
 
-    public List<CommentMessage> jsonParseMessageComment(String messageid) throws JSONException {
+    public List<CommentMessage> jsonParseMessageComment(String messageid, Context context) throws JSONException {
         JSONObject jsonObject = new JSONObject(JsonText);
         List<CommentMessage> list = new ArrayList<>();
         String array1 = jsonObject.getString("commentsmessageuser");
@@ -120,7 +127,21 @@ public class JsonParse {
             String name = jsonObject1.getString(String.valueOf(i+1));
             String content = jsonObject2.getString(String.valueOf(i+1));
             String time = jsonObject3.getString(String.valueOf(i+1));
-            CommentMessage commentMessage = new CommentMessage(messageid,content,name,time);
+            
+            int iconId = R.drawable.icon1;
+            UserDataBase myDatabase = new UserDataBase(context,"User.db",null,2);
+            SQLiteDatabase sqdb = myDatabase.getReadableDatabase();
+            Cursor cursor = sqdb.query("User", null, "UserName=?", new String[]{name}, null, null, null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    if (cursor.getString(cursor.getColumnIndex("UserName")).equals(name)){
+                        iconId = iconid[Integer.parseInt(cursor.getString(cursor.getColumnIndex("Extra")))];
+                    }
+                }
+            }
+            
+            
+            CommentMessage commentMessage = new CommentMessage(messageid,content,name,time,iconId);
             list.add(commentMessage);
         }
         return list;

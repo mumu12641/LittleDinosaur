@@ -10,6 +10,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.littledinosaur.ListLikesAndCollects;
+import com.example.littledinosaur.UserDataBase;
 import com.example.littledinosaur.adapter.CommentMessage;
 import com.example.littledinosaur.adapter.CommentMessageAdapter;
 import com.example.littledinosaur.HttpRequest;
@@ -63,12 +66,18 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
     private String UserName;
     private String IsLike;
     private String IsCollect;
+    private ImageView messagesendericon;
     private String MessageContent;
     private String MessageSendTime;
     private String MessageSenderName;
     private String MessageLikes;
     private String MessageComments;
     private String MessageCollections;
+    private LinearLayout emptyline;
+    private TextView emptytext;
+    final int[] iconid = {R.drawable.icon0,R.drawable.icon1,R.drawable.icon2,R.drawable.icon3,R.drawable.icon4,
+            R.drawable.icon5,R.drawable.icon6,R.drawable.icon7,R.drawable.icon8,R.drawable.icon9,
+            R.drawable.icon10,R.drawable.icon11};
 
 
     private String str;
@@ -116,6 +125,9 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
         collectimg = findViewById(R.id.collectionsimg);
         return_btn = findViewById(R.id.return_btn);
         recyclerView = findViewById(R.id.commentss);
+        messagesendericon = findViewById(R.id.messagesendericon);
+        emptyline = findViewById(R.id.emptyline);
+        emptytext = findViewById(R.id.emptytext);
 
         collections.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -324,6 +336,18 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
         messagecomments.setText(treeHoleMessage.getMessageComments());
         messagecollections.setText(treeHoleMessage.getMessageCollections());
 
+
+        UserDataBase myDatabase = new UserDataBase(MessageActivity.this,"User.db",null,2);
+        SQLiteDatabase sqdb = myDatabase.getReadableDatabase();
+        Cursor cursor = sqdb.query("User", null, "UserName=?", new String[]{treeHoleMessage.getMessageSenderName()}, null, null, null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                if (cursor.getString(cursor.getColumnIndex("UserName")).equals(treeHoleMessage.getMessageSenderName())){
+                    messagesendericon.setImageResource(iconid[Integer.parseInt(cursor.getString(cursor.getColumnIndex("Extra")))]);
+                }
+            }
+        }
+
         sendcommentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -364,10 +388,6 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
         });
 
         list = new ArrayList<>();
-//        CommentMessage commentMessage = new CommentMessage("#1231",
-//                "这是一条新评论","pbpbpbpb",
-//                "2021/11/12 23:08");
-//        list.add(commentMessage);
         final String[] getcommentstr = new String[1];
         Thread thread2 = new Thread(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -376,7 +396,7 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
                 getcommentstr[0] = HttpRequest.GetMessageComment(MessageId);
                 JsonParse jsonParse1 = new JsonParse(getcommentstr[0]);
                 try {
-                    list = jsonParse1.jsonParseMessageComment(MessageId);
+                    list = jsonParse1.jsonParseMessageComment(MessageId,MessageActivity.this);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -393,6 +413,12 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
         recyclerView.setLayoutManager(linearLayoutManager);
         CommentMessageAdapter commentMessageAdapter = new CommentMessageAdapter(list,MessageActivity.this);
         recyclerView.setAdapter(commentMessageAdapter);
+        if (commentMessageAdapter.getItemCount()==0){
+            emptyline.setVisibility(View.VISIBLE);
+            emptytext.setText("啊偶~这里还没有一条评论呢 动动你的小手发送一条友善的评论叭~");
+        }else{
+            emptyline.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -408,7 +434,7 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
                         getcommentstr[0] = HttpRequest.GetMessageComment(MessageId);
                         JsonParse jsonParse1 = new JsonParse(getcommentstr[0]);
                         try {
-                            list = jsonParse1.jsonParseMessageComment(MessageId);
+                            list = jsonParse1.jsonParseMessageComment(MessageId,MessageActivity.this);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -422,6 +448,11 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
                 }
                 CommentMessageAdapter commentMessageAdapter = new CommentMessageAdapter(list,MessageActivity.this);
                 recyclerView.setAdapter(commentMessageAdapter);
+                if (commentMessageAdapter.getItemCount()==0){
+                    emptyline.setVisibility(View.VISIBLE);
+                }else{
+                    emptyline.setVisibility(View.INVISIBLE);
+                }
                 refreshLayout.setRefreshing(false);
             }
         }, 1000);

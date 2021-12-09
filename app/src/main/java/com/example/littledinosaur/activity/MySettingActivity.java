@@ -2,6 +2,7 @@ package com.example.littledinosaur.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -14,7 +15,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +33,7 @@ import com.example.littledinosaur.UserDataBase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MySettingActivity extends AppCompatActivity {
 
@@ -43,7 +47,18 @@ public class MySettingActivity extends AppCompatActivity {
     private ImageView return_btn;
     private String newname;
     private Button exit_btn;
+    private ImageView userportrait;
     private List<String> nameList = new ArrayList<>();
+
+
+
+    final int[] iconnum = new int[1];
+    final int[] iconid = {R.drawable.icon0,R.drawable.icon1,R.drawable.icon2,R.drawable.icon3,R.drawable.icon4,
+            R.drawable.icon5,R.drawable.icon6,R.drawable.icon7,R.drawable.icon8,R.drawable.icon9,
+            R.drawable.icon10,R.drawable.icon11};
+    private int iconsrc;
+    private int oldicon;
+
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
         @Override
@@ -69,12 +84,15 @@ public class MySettingActivity extends AppCompatActivity {
         save_btn = findViewById(R.id.save_btn);
         mysettingsline7 = findViewById(R.id.mysettingsline7);
         mysettingsline1 = findViewById(R.id.mysettingsline1);
+        userportrait = findViewById(R.id.userportrait);
 
         final Intent intent = getIntent();
         Bundle b = intent.getExtras();
         assert b != null;
         Username = b.getString("Username");
-        nameList.add(Username);
+
+//        nameList.add(Username);
+
         newname = Username;
         editName.setText(Username);
         UserDataBase dataBase = new UserDataBase(MySettingActivity.this,"User.db",null,2);
@@ -85,13 +103,16 @@ public class MySettingActivity extends AppCompatActivity {
                 if (cursor.getString(cursor.getColumnIndex("UserName")).equals(Username)){
                     Useremail = cursor.getString(cursor.getColumnIndex("UserEmail"));
                     Userpassword = cursor.getString(cursor.getColumnIndex("UserPassword"));
+                    iconsrc = iconid[Integer.parseInt(cursor.getString(cursor.getColumnIndex("Extra")))];
+                    iconnum[0] = Integer.parseInt(cursor.getString(cursor.getColumnIndex("Extra")));
+                    oldicon = iconnum[0];
                 }else{
                     nameList.add(cursor.getString(cursor.getColumnIndex("UserName")));
                 }
             }
         }
         email.setText(Useremail);
-
+        userportrait.setImageResource(iconsrc);
 
         mysettingsline7.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +123,43 @@ public class MySettingActivity extends AppCompatActivity {
         mysettingsline1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MySettingActivity.this,"emm...这个功能我们正在努力开发呢",Toast.LENGTH_SHORT).show();
+
+                AlertDialog dialog = null;
+                AlertDialog.Builder builder = null;
+                builder = new AlertDialog.Builder(MySettingActivity.this);
+                LayoutInflater inflater1 = MySettingActivity.this.getLayoutInflater();
+                final View view1 = inflater1.inflate(R.layout.dialog_icon,null,false);
+                builder.setView(view1);
+                builder.setCancelable(false);
+                dialog = builder.create();
+
+                final ImageView icon = view1.findViewById(R.id.icon);
+//                final int[] iconnum = new int[1];
+//                final int[] iconid = {R.drawable.icon0,R.drawable.icon1,R.drawable.icon2,R.drawable.icon3,R.drawable.icon4,
+//                        R.drawable.icon5,R.drawable.icon6,R.drawable.icon7,R.drawable.icon8,R.drawable.icon9,
+//                        R.drawable.icon10,R.drawable.icon11};
+                iconnum[0]=1;
+                view1.findViewById(R.id.icon_change).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Random rand = new Random();
+                        iconnum[0] = rand.nextInt(12);
+                        icon.setImageResource(iconid[iconnum[0]]);
+                    }
+                });
+                final AlertDialog finalDialog = dialog;
+                view1.findViewById(R.id.icon_confirm).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finalDialog.cancel();
+                        userportrait.setImageResource(iconid[iconnum[0]]);
+                        iconsrc = iconid[iconnum[0]];
+                        Log.d("icon", String.valueOf(iconnum[0]));
+                    }
+                });
+
+                dialog.show();
+//                Toast.makeText(MySettingActivity.this,"emm...这个功能我们正在努力开发呢",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -116,7 +173,7 @@ public class MySettingActivity extends AppCompatActivity {
                     editName.setText(Username);
                     return;
                 }
-                if(!newname.equals(Username)){
+                if(!newname.equals(Username)||oldicon != iconnum[0]){
 
 //                    将新修改的名字写入本地数据库
                     UserDataBase userDataBase = new UserDataBase(MySettingActivity.this,"User.db",null,2);
@@ -125,6 +182,7 @@ public class MySettingActivity extends AppCompatActivity {
 //                    sqdb.update("User",values,"password=?",new String[]{"123"})
                     ContentValues values = new ContentValues();
                     values.put("UserName",newname);
+                    values.put("Extra",String.valueOf(iconnum[0]));
                     sqLiteDatabase.update("User",values,"UserEmail=?", new String[]{Useremail});
                     sqLiteDatabase.close();
 
@@ -132,8 +190,20 @@ public class MySettingActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("Username",newname);
                     bundle.putString("Useremail",Useremail);
+                    bundle.putString("Extra",String.valueOf(iconnum[0]));
                     intent.putExtras(bundle);
                     startService(intent);
+
+                    if (!newname.equals(Username)){
+//                        如果更改了名字就重新写文件
+                        SharedPreferences sp = MySettingActivity.this.getSharedPreferences("login",LoginActivity.MODE_PRIVATE);
+                        SharedPreferences.Editor edit = sp.edit();
+                        edit.clear();
+                        edit.putString("UserEmail", Useremail);
+                        edit.putString("UserPassword",Userpassword);
+                        edit.putString("UserName",newname);
+                        edit.apply();
+                    }
 
                     Toast.makeText(MySettingActivity.this,"保存成功",Toast.LENGTH_SHORT).show();
                 }
@@ -155,10 +225,12 @@ public class MySettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ListLikesAndCollects.clearList();
+
                 SharedPreferences sp=MySettingActivity.this.getSharedPreferences("login",MODE_PRIVATE);
                 SharedPreferences.Editor edit = sp.edit();
                 edit.clear();
                 edit.apply();
+
                 Intent intent = new Intent(MySettingActivity.this, LoginActivity.class);
                 MySettingActivity.this.finish();
                 startActivity(intent);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,11 +24,13 @@ public class CommentMessageAdapter extends RecyclerView.Adapter<CommentMessageAd
         TextView commentasendername;
         TextView commentsendtime;
         TextView commentcontent;
+        ImageView commentsendericon;
         public ViewHolder(View view){
             super(view);
             commentasendername = view.findViewById(R.id.commentsendername);
             commentcontent = view.findViewById(R.id.commentcontent);
             commentsendtime = view.findViewById(R.id.commentsendtime);
+            commentsendericon = view.findViewById(R.id.commentsendericon);
         }
     }
 
@@ -50,6 +53,7 @@ public class CommentMessageAdapter extends RecyclerView.Adapter<CommentMessageAd
         holder.commentsendtime .setText(commentMessage.getCommentSendTime());
         holder.commentcontent .setText(commentMessage.getCommentContent());
         holder.commentasendername .setText(commentMessage.getCommentSenderName());
+        holder.commentsendericon.setImageResource(commentMessage.getIconid());
     }
 
     @Override

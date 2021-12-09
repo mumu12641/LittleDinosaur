@@ -9,10 +9,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.littledinosaur.HttpRequest;
@@ -36,6 +39,8 @@ public class MyMessageAcitivity extends AppCompatActivity implements View.OnClic
     private ImageView mymessage_return_btn;
     private RecyclerView recyclerView;
     private List<TreeHoleMessage> messageslist = new ArrayList<>();
+    private RelativeLayout emptyline;
+    private TextView emptytext;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("WrongViewCast")
@@ -73,6 +78,8 @@ public class MyMessageAcitivity extends AppCompatActivity implements View.OnClic
 
         title = findViewById(R.id.mymemessage_title);
         recyclerView = findViewById(R.id.mymessage_recyclerview);
+        emptyline = findViewById(R.id.emptyline);
+        emptytext = findViewById(R.id.emptytext1);
         title.setText(titlestr);
         mymessage_return_btn = findViewById(R.id.mymessage_return_btn);
         mymessage_return_btn.setOnClickListener(this);
@@ -134,11 +141,24 @@ public class MyMessageAcitivity extends AppCompatActivity implements View.OnClic
                 treeHoleMessageAdapter.addMessage(treeHoleMessage1);
             }
         }
-
+        if (treeHoleMessageAdapter.getItemCount()==0){
+            Log.d("test","wuneirong");
+            emptyline.setVisibility(View.VISIBLE);
+            if (titlestr.equals("我的点赞")){
+                emptytext.setText("你还没有给任何帖子点赞哦，要不你去点个赞👍试试");
+            } else if(titlestr.equals("我的树洞")){
+                emptytext.setText("你还没有发过帖子哦，去首页发个帖子试试吧，说不定能碰到和你有共同话题的人呢♥♥♥");
+            }else if(titlestr.equals("我的收藏")){
+                emptytext.setText("你还没有收藏过任何帖子哦，去收藏一个试试叭");
+            }
+        }else{
+            emptyline.setVisibility(View.INVISIBLE);
+        }
         LayoutAnimationController controller = new LayoutAnimationController(AnimationUtils.loadAnimation(MyMessageAcitivity.this,
                 R.anim.anim_treeholemessage));
         recyclerView.setLayoutAnimation(controller);
         recyclerView.setAdapter(treeHoleMessageAdapter);
+
     }
 
     @Override

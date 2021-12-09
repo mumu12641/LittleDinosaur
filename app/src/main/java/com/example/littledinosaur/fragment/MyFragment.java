@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.LinkAddress;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.littledinosaur.R;
+import com.example.littledinosaur.UserDataBase;
 import com.example.littledinosaur.activity.AboutActivity;
 import com.example.littledinosaur.activity.LoginActivity;
 import com.example.littledinosaur.activity.MyMessageAcitivity;
@@ -35,6 +39,11 @@ public class MyFragment extends Fragment implements View.OnClickListener{
     private LinearLayout line8;
     private LinearLayout line9;
     private LinearLayout line5;
+    private ImageView userimage;
+    final int[] iconid = {R.drawable.icon0,R.drawable.icon1,R.drawable.icon2,R.drawable.icon3,R.drawable.icon4,
+            R.drawable.icon5,R.drawable.icon6,R.drawable.icon7,R.drawable.icon8,R.drawable.icon9,
+            R.drawable.icon10,R.drawable.icon11};
+
     public MyFragment(Context context,String Username,Activity activity){
         this.context = context;
         this.Username = Username;
@@ -53,6 +62,18 @@ public class MyFragment extends Fragment implements View.OnClickListener{
         line8 = view.findViewById(R.id.line8);
         line9 = view.findViewById(R.id.line9);
         line5 = view.findViewById(R.id.line5);
+        userimage = view.findViewById(R.id.userimage);
+
+        UserDataBase myDatabase = new UserDataBase(context,"User.db",null,2);
+        SQLiteDatabase sqdb = myDatabase.getReadableDatabase();
+        Cursor cursor = sqdb.query("User", null, "UserName=?", new String[]{Username}, null, null, null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                if (cursor.getString(cursor.getColumnIndex("UserName")).equals(Username)){
+                    userimage.setImageResource(iconid[Integer.parseInt(cursor.getString(cursor.getColumnIndex("Extra")))]);
+                }
+            }
+        }
 
         line3.setOnClickListener(this);
         line6.setOnClickListener(this);

@@ -36,6 +36,9 @@ public class LoginActivity extends AppCompatActivity {
         if (!email.equals("error")&&!password.equals("error")&&!name.equals("error")) {
                 Bundle bundle = new Bundle();
                 bundle.putString("Username", name);
+
+
+
                 Intent intent1 = new Intent(LoginActivity.this, GetUserLikesAndCollectsService.class);
                 intent1.putExtras(bundle);
                 startService(intent1);

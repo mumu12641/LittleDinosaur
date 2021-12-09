@@ -106,8 +106,8 @@
                     android:id="@+id/userportrait"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/dragon1"
-                    android:layout_weight="1"/>
+                    android:background="@drawable/icon1"
+                    android:layout_marginRight="10dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

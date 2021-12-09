@@ -125,6 +125,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.home:
                 hideAllFragment(transaction);
+                if (home.isSelected()){
+                    homeFragment = new HomeFragment(HomeActivity.this,UserName);
+                    transaction.add(R.id.content,homeFragment);
+                }
                 setSelected();
                 home.setSelected(true);
                 titleBar.setVisibility(View.VISIBLE);

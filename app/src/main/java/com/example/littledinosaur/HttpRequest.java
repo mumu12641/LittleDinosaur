@@ -100,9 +100,13 @@ public class HttpRequest {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public static void changeName(String newname, String Useremail){
+    public static void changeName(String newname, String Useremail,String Extra){
         OkHttpClient client = new OkHttpClient();
-        RequestBody requestBody = new FormBody.Builder().add("UserEmail",Useremail).add("NewName",newname).build();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("UserEmail",Useremail)
+                .add("NewName",newname)
+                .add("Extra",Extra)
+                .build();
         Request request = new Request.Builder().url("http://"+IP+":"+Port+"/ChangeName").post(requestBody).build();
         Response response = null;
         try {

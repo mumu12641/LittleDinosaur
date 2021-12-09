@@ -30,6 +30,7 @@ public class PostChangedNameService extends IntentService {
 
     private String newname;
     private String Useremail;
+    private String Extra;
 
     public PostChangedNameService() {
         super("PostChangedNameService");
@@ -86,7 +87,8 @@ public class PostChangedNameService extends IntentService {
             if (bundle != null) {
                 newname = bundle.getString("Username");
                 Useremail = bundle.getString("Useremail");
-                HttpRequest.changeName(newname,Useremail);
+                Extra = bundle.getString("Extra");
+                HttpRequest.changeName(newname,Useremail,Extra);
             }
         }
     }

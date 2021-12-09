@@ -5,12 +5,18 @@ public class CommentMessage {
     private String CommentContent;
     private String CommentSenderName;
     private String CommentSendTime;
+    private int iconid;
 
-    public CommentMessage(String MessageId, String CommentContent,String CommentSenderName,String CommentSendTime){
+    public CommentMessage(String MessageId, String CommentContent,String CommentSenderName,String CommentSendTime, int iconid){
         this.CommentContent = CommentContent;
         this.CommentSenderName = CommentSenderName;
         this.MessageId = MessageId;
         this.CommentSendTime = CommentSendTime;
+        this.iconid = iconid;
+    }
+
+    public int getIconid() {
+        return iconid;
     }
 
     public void setMessageId(String messageId) {

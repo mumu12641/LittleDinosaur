@@ -32,7 +32,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_margin="20dp"
-                    android:src="@drawable/dragon1" />
+                    android:src="@drawable/icon1" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"

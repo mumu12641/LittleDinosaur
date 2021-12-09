@@ -3,8 +3,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/commentsendericon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/icon3"/>
     <TextView
         android:layout_margin="5dp"
+        android:layout_toRightOf="@+id/commentsendericon"
         android:id="@+id/commentsendername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

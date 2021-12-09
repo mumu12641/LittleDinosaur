@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activity.MessageActivity">
     <LinearLayout
         android:id="@+id/titlebarline"
@@ -55,9 +56,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <ImageView
+                            android:id="@+id/messagesendericon"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:background="@drawable/dragon1"/>
+                            android:background="@drawable/icon2"/>
                         <TextView
                             android:id="@+id/messagesendername"
                             android:layout_width="wrap_content"
@@ -181,6 +183,28 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/gapline"
                     />
+                <LinearLayout
+                    android:id="@+id/emptyline"
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/gapline"
+                    android:orientation="vertical"
+                    android:paddingTop="60dp"
+                    android:layout_margin="30dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_margin="10dp"
+                        android:id="@+id/emptytext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="暂时这里还什么都没有捏~"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_gravity="center"
+                        />
+
+
+                </LinearLayout>
+
             </RelativeLayout>
         </ScrollView>
 
