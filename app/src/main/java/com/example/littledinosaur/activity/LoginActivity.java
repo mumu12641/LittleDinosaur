@@ -2,12 +2,18 @@ package com.example.littledinosaur.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,9 +26,13 @@ import com.example.littledinosaur.R;
 import com.example.littledinosaur.UserDataBase;
 import com.example.littledinosaur.service.GetUserLikesAndCollectsService;
 
+import java.util.Random;
+
 public class LoginActivity extends AppCompatActivity {
 
 
+    @SuppressLint("WrongConstant")
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +44,29 @@ public class LoginActivity extends AppCompatActivity {
             String password=sp.getString("UserPassword", "error");
             String name = sp.getString("UserName","error");
         if (!email.equals("error")&&!password.equals("error")&&!name.equals("error")) {
+
+
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            @SuppressLint("WrongConstant") Notification.Builder notification;
+            String channelId = String.valueOf(new Random().nextInt()); //自己生成的用于通知栏的channelId，高版本必备
+            NotificationChannel mChannel = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                mChannel = new NotificationChannel(channelId, "name", NotificationManager.IMPORTANCE_HIGH);
+                mChannel.enableVibration(true);
+                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                manager.createNotificationChannel(mChannel);
+                notification = new Notification.Builder(LoginActivity.this,channelId);
+            }else{
+                notification = new Notification.Builder(LoginActivity.this);
+            }
+            notification.setContentTitle("登录成功").
+                    setContentText("欢迎！！！")
+                    .setWhen(System.currentTimeMillis())
+                    .setSmallIcon(R.drawable.dragon1)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.dragon1))
+                    .setPriority(NotificationCompat.PRIORITY_MAX);
+            Notification notification1 = notification.build();
+            manager.notify(1, notification1);
                 Bundle bundle = new Bundle();
                 bundle.putString("Username", name);
 
@@ -77,16 +110,28 @@ public class LoginActivity extends AppCompatActivity {
                         if (Passwordstr.equals(cursor.getString(cursor.getColumnIndex("UserPassword")))
                                 &&
                                 Emailstr.equals(cursor.getString((cursor.getColumnIndex("UserEmail"))))) {
-//                            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//                            @SuppressLint("WrongConstant") Notification.Builder notification = new Notification.Builder(LoginActivity.this).
-//                                    setContentTitle("登录成功").
-//                                    setContentText("欢迎" + "!!")
-//                                    .setWhen(System.currentTimeMillis())
-//                                    .setSmallIcon(R.drawable.dragon1)
-//                                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.dragon1))
-//                                    .setPriority(NotificationCompat.PRIORITY_MAX);
-//                            Notification notification1 = notification.build();
-//                            manager.notify(1, notification1);
+                            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                            @SuppressLint("WrongConstant") Notification.Builder notification;
+                            String channelId = String.valueOf(new Random().nextInt()); //自己生成的用于通知栏的channelId，高版本必备
+                            NotificationChannel mChannel = null;
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                mChannel = new NotificationChannel(channelId, "name", NotificationManager.IMPORTANCE_HIGH);
+                                mChannel.enableVibration(true);
+                                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                                manager.createNotificationChannel(mChannel);
+                                notification = new Notification.Builder(LoginActivity.this,channelId);
+                            }else{
+                                notification = new Notification.Builder(LoginActivity.this);
+                            }
+                            notification.setContentTitle("登录成功").
+                                    setContentText("欢迎！！！")
+                                    .setWhen(System.currentTimeMillis())
+                                    .setSmallIcon(R.drawable.dragon1)
+                                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.dragon1))
+                                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                                    .setAutoCancel(true);
+                            Notification notification1 = notification.build();
+                            manager.notify(1, notification1);
 
 
                             flag = true;

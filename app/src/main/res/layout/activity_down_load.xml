@@ -25,24 +25,30 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:layout_gravity="center"/>
-        <TextView
-            android:id="@+id/newversion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="新版本更新"
-            android:layout_gravity="center"
-            android:textColor="#D0021B"
-            android:textSize="15sp"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/download_line1"
+        android:id="@+id/updatecontent"
+        android:padding="10dp"
+        android:background="@drawable/edit_bk"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:layout_margin="10dp"
+        android:text="🎉🎉🎉2021/12/3 v1.0.3更新日志🎉🎉🎉\n1️⃣在发现界面加了日历显示以及随机的名人名言🉑🉑🉑\n2️⃣添加了自己的To Do List （暂时只支持写以及看，以后会做todolist的提醒）🌟🌟🌟\n3️⃣关于bug修复，这次修复了在发现界面和我的界面可以刷新，并且一刷新就跳到首页的bug，以及添加了修改昵称重名的判断🆗🆗🆗\n（最近没啥灵感，发现界面一直不知道做啥，如果你有好的灵感速速联系我👂👂👂）"
+        />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/download_line2"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="5dp"
         android:orientation="vertical"
         android:layout_centerInParent="true"
-        android:layout_below="@+id/download_line1">
+        android:layout_below="@+id/updatecontent">
         <TextView
             android:id="@+id/file_name"
             android:layout_width="wrap_content"

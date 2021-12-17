@@ -2,108 +2,217 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Coming soon"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:layout_centerInParent="true"-->
-<!--        android:textSize="20sp"/>-->
-    <RelativeLayout
-        android:id="@+id/research_line1"
-        android:layout_margin="25dp"
-        android:background="@drawable/edit_bk"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/search_line1"
         android:layout_width="match_parent"
+        android:orientation="horizontal"
         android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:id="@+id/calendar_line1"
+        <RelativeLayout
+            android:layout_weight="1"
+            android:id="@+id/research_line1"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/edit_bk"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true">
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:id="@+id/calendar_line1"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/calendartext1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:text="2021年11月 农历十月二十六"
-                android:textSize="10sp" />
-        </LinearLayout>
-       <LinearLayout
-           android:layout_below="@+id/calendar_line1"
-           android:id="@+id/calendar_line2"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="vertical">
-           <TextView
-               android:id="@+id/calendartext2"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_gravity="center"
-               android:text="30"
-               android:textColor="@color/black"
-               android:textSize="75sp"
-               app:fontFamily="monospace" />
-       </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/calendar_line3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/calendar_line2"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/calendartext3"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/calendartext1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="2021年11月 农历十月二十六"
+                    android:textSize="10sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_below="@+id/calendar_line1"
+                android:id="@+id/calendar_line2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="星期二 | Tuesday"
-                android:textSize="10sp"
-                app:fontFamily="monospace" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/calendar_line3"
-            android:id="@+id/calendar_line4"
-            android:orientation="vertical"
-            android:background="@drawable/motto_bk">
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/calendartext2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="30"
+                    android:textColor="@color/black"
+                    android:textSize="75sp"
+                    app:fontFamily="monospace" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/mottotext"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/calendar_line3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/calendar_line2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/calendartext3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="星期二 | Tuesday"
+                    android:textSize="10sp"
+                    app:fontFamily="monospace" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:text="世上只有一种英雄主义，就是在认清生活真相之后依然热爱生活"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:fontFamily="monospace" />
-
-            <TextView
-                android:id="@+id/mottoauther"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_below="@+id/calendar_line3"
+                android:id="@+id/calendar_line4"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/mottotext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="世上只有一种英雄主义，就是在认清生活真相之后依然热爱生活"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    app:fontFamily="monospace" />
+
+                <TextView
+                    android:id="@+id/mottoauther"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="--罗曼罗兰"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    app:fontFamily="monospace" />
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:id="@+id/research_line2"
+            android:background="@drawable/motto_bk"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/music_line1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/research_song"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/search_song"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="音乐是治愈一切的良药"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_margin="10dp"
+                    android:id="@+id/musicimage"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/music" />
+
+                <SeekBar
+                    android:layout_margin="5dp"
+                    android:id="@+id/musicbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_seekbar" />
+            </LinearLayout>
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/music_line1"
                 android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="10dp"
-                android:text="--罗曼罗兰"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:fontFamily="monospace" />
-        </LinearLayout>
-    </RelativeLayout>
+                android:layout_marginRight="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="30dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/playsong"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/play" />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp">
+
+                    <ImageView
+                        android:id="@+id/nextsong"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/nextsong" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
     <RelativeLayout
-        android:layout_below="@+id/research_line1"
-        android:layout_marginRight="25dp"
-        android:layout_marginLeft="25dp"
+        android:id="@+id/note_reline"
+        android:layout_below="@+id/search_line1"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:background="@drawable/motto_bk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -133,10 +242,12 @@
                     android:background="@drawable/add" />
             </LinearLayout>
         </RelativeLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/note_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/note_line1"/>
+            android:layout_below="@id/note_line1" />
     </RelativeLayout>
+
 </RelativeLayout>

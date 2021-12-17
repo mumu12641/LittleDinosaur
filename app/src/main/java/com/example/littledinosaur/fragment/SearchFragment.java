@@ -4,13 +4,17 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,12 +42,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements View.OnClickListener{
 
     private Context context;
     private Activity activity;
@@ -56,6 +61,19 @@ public class SearchFragment extends Fragment {
     private ImageView addnote_btn;
     private String Username;
     private List<String> list = new ArrayList<>();
+    private ImageView musicimage;
+    private ImageView musicplay;
+    private ImageView nextsong;
+    private SeekBar musicbar;
+    private MediaPlayer mediaPlayer;
+    private ImageView research_song;
+
+    private int songLength;//歌曲时长
+    private boolean isPlaying = false;//是否在播放
+    private musicThread thread;
+    private int aleadyPlaySongNum=0;//播放了的歌曲的数目
+    private String[] strings = {"http://m10.music.126.net/20211215190055/9c966fb7d78281811eba87138be0f2a7/ymusic/7bd9/a7d9/c4e5/fd6ae6210e54056cdca0bd6c8624123c.mp3",
+    "http://m10.music.126.net/20211215204019/ef672147d41bb2774c01ef2ac8ecba54/ymusic/535e/015a/0352/d48c7c9a4c60c7b74c9448aa4c6817df.mp3"};
 
     public SearchFragment(Context context,Activity activity,String Username){
         this.context = context;
@@ -75,6 +93,11 @@ public class SearchFragment extends Fragment {
         mottotext = view.findViewById(R.id.mottotext);
         recyclerView = view.findViewById(R.id.note_recyclerview);
         addnote_btn = view.findViewById(R.id.addnote_btn);
+        musicbar = view.findViewById(R.id.musicbar);
+        nextsong = view.findViewById(R.id.nextsong);
+        musicplay = view.findViewById(R.id.playsong);
+        musicimage = view.findViewById(R.id.musicimage);
+        research_song = view.findViewById(R.id.research_song);
 
         String mottotextString = null;
         String mottoautherString = null;
@@ -178,8 +201,177 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        musicplay.setOnClickListener(this);
+        nextsong.setOnClickListener(this);
+        research_song.setOnClickListener(this);
+        musicbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int progress=seekBar.getProgress();
+                if (mediaPlayer!=null) {
+                    mediaPlayer.seekTo(progress);
+                    mediaPlayer.start();
+                    musicplay.setBackgroundResource(R.drawable.pause);
+                }
+            }
+        });
+
 
         return view;
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.playsong:
+                if (!isPlaying){
+                    isPlaying = true;
+                    musicplay.setBackgroundResource(R.drawable.pause);
+                    if (mediaPlayer != null&&!mediaPlayer.isPlaying()){
+                        musicbar.setProgress(mediaPlayer.getCurrentPosition());
+                        mediaPlayer.seekTo(mediaPlayer.getCurrentPosition());
+                        Log.d("musicnow",String.valueOf(mediaPlayer.getCurrentPosition()));
+                        mediaPlayer.start();
+                    }
+                }else{
+                    isPlaying = false;
+                    if(mediaPlayer.isPlaying() && mediaPlayer!=null){
+                        mediaPlayer.pause();
+                    }
+                    musicplay.setBackgroundResource(R.drawable.play);
+                }
+                if (isPlaying && mediaPlayer == null) {
+//                    第一次点击就开始
+                    mediaPlayer = new MediaPlayer();
+                    try {
+                        Toast.makeText(context,"准备歌曲中~~~",Toast.LENGTH_SHORT).show();
+//                        mediaPlayer.setDataSource(strings[aleadyPlaySongNum]);
+                        mediaPlayer.setDataSource("http://101.201.50.108:3535/GetMusic");
+                        mediaPlayer.prepareAsync();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+//                        准备完成
+                            Toast.makeText(context,"开始播放~~~",Toast.LENGTH_SHORT).show();
+                            mediaPlayer.start();
+                            songLength = mediaPlayer.getDuration();
+                            musicbar.setMax(songLength);
+                            thread = new musicThread();
+                            thread.start();
+                        }
+                    });
+                    mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+                        @Override
+                        public void onBufferingUpdate(MediaPlayer mp, int percent) {
+                            //得到缓冲值
+                            int secendProssed= mediaPlayer.getDuration()/100*percent;
+                            //设置第二进度
+                            musicbar.setSecondaryProgress(secendProssed);
+                        }
+                    });
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+//                        播放完成
+                            thread = null;
+                            isPlaying = false;
+                            mediaPlayer.stop();
+                            mediaPlayer.reset();
+                            mediaPlayer = null;
+                            musicplay.setBackgroundResource(R.drawable.play);
+//                            进入下一首
+                            aleadyPlaySongNum++;
+                            if (aleadyPlaySongNum==2){
+                                aleadyPlaySongNum=0;
+                            }
+                            musicplay.performClick();
+                            Log.d("perform","performonclick ok");
+
+                        }
+                    });
+                }
+                break;
+            case R.id.nextsong:
+                Toast.makeText(context,"下一首",Toast.LENGTH_SHORT).show();
+                if (mediaPlayer != null){
+                    aleadyPlaySongNum++;
+                    if (aleadyPlaySongNum==2){
+                        aleadyPlaySongNum=0;
+                    }
+                    thread = null;
+                    isPlaying = false;
+                    mediaPlayer.stop();
+                    mediaPlayer.reset();
+                    mediaPlayer = null;
+                    musicplay.setBackgroundResource(R.drawable.play);
+                    musicplay.performClick();
+                    Log.d("perform","performonclick ok");
+                }
+                break;
+            case R.id.research_song:
+                AlertDialog dialog = null;
+                AlertDialog.Builder builder = null;
+                builder = new AlertDialog.Builder(context);
+                LayoutInflater inflater1 = activity.getLayoutInflater();
+                final View view1 = inflater1.inflate(R.layout.dialog_todonote,null,false);
+                TextView notecontent = view1.findViewById(R.id.notecontent);
+                notecontent.setText("请输入你想要添加的歌曲\n歌曲数据来自于网易云，出现歌曲错误请联系开发人员");
+                builder.setView(view1);
+                builder.setCancelable(false);
+                dialog = builder.create();
+                final EditText editnote = view1.findViewById(R.id.editnote);
+                final String[] s = new String[1];
+                final AlertDialog finalDialog = dialog;
+                view1.findViewById(R.id.dialog_confirm_sure).setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        s[0] = editnote.getText().toString();
+                        Toast.makeText(context,"你添加了"+s[0],Toast.LENGTH_SHORT).show();
+                        finalDialog.cancel();
+                        Thread thread = new Thread(new Runnable() {
+                            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                            @Override
+                            public void run() {
+                                String s1 = HttpRequest.PostMusic(s[0]);
+                            }
+                        });
+                        thread.start();
+                    }
+                });
+                view1.findViewById(R.id.dialog_confirm_cancle).setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        finalDialog.cancel();
+                    }
+                });
+
+                dialog.show();
+                break;
+        }
+    }
+    private class musicThread extends Thread{
+        @Override
+        public void run() {
+            super.run();
+            while(musicbar.getProgress()<musicbar.getMax()) {
+                int nowpos = mediaPlayer.getCurrentPosition();
+                musicbar.setProgress(nowpos);
+                SystemClock.sleep(1000);
+            }
+        }
+    }
 }

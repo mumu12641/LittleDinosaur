@@ -271,12 +271,15 @@ public class HttpRequest {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public static void PostMessageComment(String MessageId, String CommentSenderName,String CommentSendTime,String CommentCotent){
+    public static void PostMessageComment(String MessageId,
+                                          String CommentSenderName,String CommentSendTime,String CommentCotent,
+                                          String extra){
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = new FormBody.Builder().add("MessageId",MessageId)
                 .add("CommentSenderName",CommentSenderName)
                 .add("CommentSendTime",CommentSendTime)
                 .add("CommentContent",CommentCotent)
+                .add("CommentExtra",extra)
                 .build();
         Request request = new Request.Builder().url("http://"+IP+":"+Port+"/PostMessageComment").post(requestBody).build();
         Response response = null;
@@ -372,6 +375,73 @@ public class HttpRequest {
                 .add("Note",note)
                 .build();
         Request request = new Request.Builder().url("http://"+IP+":"+Port+"/AddOrDeleteNote").post(requestBody).build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String string = null;
+        try {
+            if (response != null){
+                string  = Objects.requireNonNull(Objects.requireNonNull(response).body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return string;
+    }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String GetSpecificTreeHoleMessage(int Start,int End){
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("Start", String.valueOf(Start))
+                .add("End", String.valueOf(End))
+                .build();
+        Request request = new Request.Builder().url("http://"+IP+":"+Port+"/GetSpecificTreeHoleMessage").post(requestBody).build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String string = null;
+        try {
+            if (response != null){
+                string  = Objects.requireNonNull(Objects.requireNonNull(response).body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return string;
+    }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String GetMessageNum(){
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url("http://"+IP+":"+Port+"/GetMessageNum").build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String string = null;
+        try {
+            if (response != null){
+                string  = Objects.requireNonNull(Objects.requireNonNull(response).body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return string;
+    }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String PostMusic(String musicname){
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("MusicName",musicname)
+                .build();
+        Request request = new Request.Builder().url("http://"+IP+":"+Port+"/PostMusic").post(requestBody).build();
         Response response = null;
         try {
             response = client.newCall(request).execute();

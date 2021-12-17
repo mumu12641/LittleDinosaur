@@ -97,7 +97,7 @@ public class MySettingActivity extends AppCompatActivity {
         editName.setText(Username);
         UserDataBase dataBase = new UserDataBase(MySettingActivity.this,"User.db",null,2);
         SQLiteDatabase sq = dataBase.getReadableDatabase();
-        Cursor cursor = sq.query("User", null, null, null, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = sq.query("User", null, null, null, null, null, null);
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 if (cursor.getString(cursor.getColumnIndex("UserName")).equals(Username)){
@@ -195,7 +195,7 @@ public class MySettingActivity extends AppCompatActivity {
                     startService(intent);
 
                     if (!newname.equals(Username)){
-//                        如果更改了名字就重新写文件
+//                        如果更改了名字或者头像就重新写文件
                         SharedPreferences sp = MySettingActivity.this.getSharedPreferences("login",LoginActivity.MODE_PRIVATE);
                         SharedPreferences.Editor edit = sp.edit();
                         edit.clear();

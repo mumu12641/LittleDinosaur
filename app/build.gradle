@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "31.0.0"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.0"
     defaultConfig {
         applicationId "com.example.littledinosaur"
         minSdkVersion 15
-        targetSdkVersion 31
-        versionCode 3
-        versionName "1.0.3"
+        targetSdkVersion 30
+        versionCode 5
+        versionName "1.0.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

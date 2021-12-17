@@ -79,7 +79,7 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
             R.drawable.icon5,R.drawable.icon6,R.drawable.icon7,R.drawable.icon8,R.drawable.icon9,
             R.drawable.icon10,R.drawable.icon11};
 
-
+    private String extra;
     private String str;
     private TreeHoleMessage treeHoleMessage;
 
@@ -339,11 +339,19 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
 
         UserDataBase myDatabase = new UserDataBase(MessageActivity.this,"User.db",null,2);
         SQLiteDatabase sqdb = myDatabase.getReadableDatabase();
-        Cursor cursor = sqdb.query("User", null, "UserName=?", new String[]{treeHoleMessage.getMessageSenderName()}, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = sqdb.query("User", null, "UserName=?", new String[]{treeHoleMessage.getMessageSenderName()}, null, null, null);
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 if (cursor.getString(cursor.getColumnIndex("UserName")).equals(treeHoleMessage.getMessageSenderName())){
                     messagesendericon.setImageResource(iconid[Integer.parseInt(cursor.getString(cursor.getColumnIndex("Extra")))]);
+                }
+            }
+        }
+        @SuppressLint("Recycle") Cursor cursor1 = sqdb.query("User", null, "UserName=?", new String[]{UserName}, null, null, null);
+        if (cursor1 != null) {
+            while (cursor1.moveToNext()) {
+                if (cursor1.getString(cursor1.getColumnIndex("UserName")).equals(UserName)){
+                    extra = cursor1.getString(cursor1.getColumnIndex("Extra"));
                 }
             }
         }
@@ -372,7 +380,7 @@ public class MessageActivity extends AppCompatActivity implements SwipeRefreshLa
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
                         public void run() {
-                            HttpRequest.PostMessageComment(MessageId,UserName,nowTime,CommentStr);
+                            HttpRequest.PostMessageComment(MessageId,UserName,nowTime,CommentStr,extra);
                         }
                     });
                     thread1.start();

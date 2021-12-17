@@ -9,9 +9,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -27,6 +30,7 @@ import com.example.littledinosaur.TitleBar;
 import com.example.littledinosaur.adapter.TreeHoleMessage;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +57,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private FragmentTransaction transaction;
     private Scroller scroller;
     private List<TreeHoleMessage> list;
+    private boolean homeRebuildFlag=false;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -74,8 +79,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         titleBar = new TitleBar(HomeActivity.this,null);
         titleBar = findViewById(R.id.titlebar);
         frameLayout = findViewById(R.id.content);
-
-
         home.setOnClickListener(this);
         search.setOnClickListener(this);
         my.setOnClickListener(this);
@@ -140,10 +143,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     home.setImageResource(R.drawable.homeclicked1);
 //                    hometext.setTextColor(Color.rgb(6,194,95));
                 }
-                if (homeFragment == null){
+                if (homeFragment == null||homeRebuildFlag){
 //                    这里其实可以实现将所有的碎片都初始化好 并且添加进去
 //                    Log.d("Username",UserName);
                     homeFragment = new HomeFragment(HomeActivity.this,UserName);
+                                        Log.d("homefragment","rebuild");
                     transaction.add(R.id.content,homeFragment);
                 }else{
                     transaction.show(homeFragment);
@@ -318,6 +322,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         FragmentTransaction transaction = fragmentManager.beginTransaction();
                         transaction.remove(homeFragment);
+                        homeFragment.onDestroy();
+                        homeFragment.onDetach();
                         homeFragment = null;
                         transaction.commitAllowingStateLoss();
                         home.performClick();

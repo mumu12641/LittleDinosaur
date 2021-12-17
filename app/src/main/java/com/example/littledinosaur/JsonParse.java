@@ -117,28 +117,31 @@ public class JsonParse {
         String array1 = jsonObject.getString("commentsmessageuser");
         String array2 = jsonObject.getString("commentscontent");
         String array3 = jsonObject.getString("commentstime");
+        String array4 = jsonObject.getString("commentsmessageusericon");
         JSONArray jsonArray1 = new JSONArray(array1);
         JSONArray jsonArray2 = new JSONArray(array2);
         JSONArray jsonArray3 = new JSONArray(array3);
+        JSONArray jsonArray4 = new JSONArray(array4);
         for (int i=0;i<jsonArray1.length();i++){
             JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
             JSONObject jsonObject2 = jsonArray2.getJSONObject(i);
             JSONObject jsonObject3 = jsonArray3.getJSONObject(i);
+            JSONObject jsonObject4 = jsonArray4.getJSONObject(i);
             String name = jsonObject1.getString(String.valueOf(i+1));
             String content = jsonObject2.getString(String.valueOf(i+1));
             String time = jsonObject3.getString(String.valueOf(i+1));
-            
-            int iconId = R.drawable.icon1;
-            UserDataBase myDatabase = new UserDataBase(context,"User.db",null,2);
-            SQLiteDatabase sqdb = myDatabase.getReadableDatabase();
-            Cursor cursor = sqdb.query("User", null, "UserName=?", new String[]{name}, null, null, null);
-            if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    if (cursor.getString(cursor.getColumnIndex("UserName")).equals(name)){
-                        iconId = iconid[Integer.parseInt(cursor.getString(cursor.getColumnIndex("Extra")))];
-                    }
-                }
-            }
+            int iconId = iconid[Integer.parseInt((String) jsonObject4.get(String.valueOf(i+1)))];
+//            int iconId = R.drawable.icon1;
+//            UserDataBase myDatabase = new UserDataBase(context,"User.db",null,2);
+//            SQLiteDatabase sqdb = myDatabase.getReadableDatabase();
+//            Cursor cursor = sqdb.query("User", null, "UserName=?", new String[]{name}, null, null, null);
+//            if (cursor != null) {
+//                while (cursor.moveToNext()) {
+//                    if (cursor.getString(cursor.getColumnIndex("UserName")).equals(name)){
+//                        iconId = iconid[Integer.parseInt(cursor.getString(cursor.getColumnIndex("Extra")))];
+//                    }
+//                }
+//            }
             
             
             CommentMessage commentMessage = new CommentMessage(messageid,content,name,time,iconId);

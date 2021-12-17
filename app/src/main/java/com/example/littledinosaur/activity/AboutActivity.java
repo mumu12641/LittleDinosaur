@@ -41,7 +41,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        nowversion.setText("version " + verName);
+        nowversion.setText("v " + verName);
 
 
         final String[] string = {null};

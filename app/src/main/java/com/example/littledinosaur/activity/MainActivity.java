@@ -1,3 +1,14 @@
+/*
+  ___        __ _       _ _           ____  _             _ _
+ |_ _|_ __  / _(_)_ __ (_) |_ _   _  / ___|| |_ _   _  __| (_) ___
+  | || '_ \| |_| | '_ \| | __| | | | \___ \| __| | | |/ _` | |/ _ \
+  | || | | |  _| | | | | | |_| |_| |  ___) | |_| |_| | (_| | | (_) |
+ |___|_| |_|_| |_|_| |_|_|\__|\__, | |____/ \__|\__,_|\__,_|_|\___/
+                              |___/
+ */
+
+
+
 package com.example.littledinosaur.activity;
 
 import androidx.annotation.NonNull;
@@ -5,6 +16,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -12,8 +24,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
        // checkPermission();
+        checkNotifySetting();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -91,10 +106,10 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         int newversion= 0;
-//        String apkDescribe = null;
+        String apkDescribe = null;
         try {
             newversion = Integer.parseInt(jsonObject[0].getString("apkVersion"));
-//            apkDescribe = jsonObject[0].getString("apkDescribe");
+            apkDescribe = jsonObject[0].getString("apkDescribe");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -112,10 +127,14 @@ public class MainActivity extends AppCompatActivity {
             builder.setCancelable(false);
             alert = builder.create();
 
+            String finalApkDescribe = apkDescribe;
             view_dialog.findViewById(R.id.update_btn).setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     Intent intent1 = new Intent(MainActivity.this, DownLoadActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("updatecontent", finalApkDescribe);
+                    intent1.putExtras(bundle);
                     startActivity(intent1);
                 }
             });
@@ -215,5 +234,46 @@ public class MainActivity extends AppCompatActivity {
 //                break;
 //        }
 //    }
+    private void checkNotifySetting() {
+        NotificationManagerCompat manager = NotificationManagerCompat.from(this);
+        // areNotificationsEnabled方法的有效性官方只最低支持到API 19，低于19的仍可调用此方法不过只会返回true，即默认为用户已经开启了通知。
+        boolean isOpened = manager.areNotificationsEnabled();
+        Log.d("notification", String.valueOf(isOpened));
+        if (!isOpened) {
+            Toast.makeText(MainActivity.this,"你还没有开启该应用的通知权限哦，请前往设置打开~",Toast.LENGTH_SHORT).show();
+//            try {
+//                Intent intent = new Intent();
+//                intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+//                //这种方案适用于 API 26, 即8.0（含8.0）以上可以用
+////                intent.putExtra(EXTRA_APP_PACKAGE, getPackageName());
+////                intent.putExtra(EXTRA_CHANNEL_ID, getApplicationInfo().uid);
+//
+//                //这种方案适用于 API21——25，即 5.0——7.1 之间的版本可以使用
+//                intent.putExtra("app_package", getPackageName());
+//                intent.putExtra("app_uid", getApplicationInfo().uid);
+//
+//                // 小米6 -MIUI9.6-8.0.0系统，是个特例，通知设置界面只能控制"允许使用通知圆点"——然而这个玩意并没有卵用，我想对雷布斯说：I'm not ok!!!
+//                //  if ("MI 6".equals(Build.MODEL)) {
+//                //      intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                //      Uri uri = Uri.fromParts("package", getPackageName(), null);
+//                //      intent.setData(uri);
+//                //      // intent.setAction("com.android.settings/.SubSettings");
+//                //  }
+//                startActivity(intent);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                Intent intent = new Intent();
+//
+//                //下面这种方案是直接跳转到当前应用的设置界面。
+//                //https://blog.csdn.net/ysy950803/article/details/71910806
+//                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                Uri uri = Uri.fromParts("package", getPackageName(), null);
+//                intent.setData(uri);
+//                startActivity(intent);
+//            }
+        }else{
+            Log.d("permission","yes");
+        }
+    }
 
 }

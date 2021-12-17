@@ -36,6 +36,8 @@ public class DownLoadActivity extends AppCompatActivity implements View.OnClickL
     private DownloadManager downloadManager;
     private DownloadManager.Request request;
     private TextView tishi;
+    private TextView updatecontent;
+    private String update;
     public static String downloadUrl = "http://101.201.50.108:3535/APKDownload";
     Timer timer;
     long id;
@@ -65,9 +67,18 @@ public class DownLoadActivity extends AppCompatActivity implements View.OnClickL
         progress = (TextView) findViewById(R.id.progress);
         file_name = (TextView) findViewById(R.id.file_name);
         nowversion = findViewById(R.id.nowversion);
+        updatecontent = findViewById(R.id.updatecontent);
         pb_update = findViewById(R.id.pb_update);
         tishi = findViewById(R.id.tishi);
         tishi.setVisibility(View.INVISIBLE);
+
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        assert bundle != null;
+        update = bundle.getString("updatecontent");
+        updatecontent.setText(update);
+
 
         String verName = null;
         try {
@@ -75,7 +86,7 @@ public class DownLoadActivity extends AppCompatActivity implements View.OnClickL
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        nowversion.setText("Version " + verName);
+        nowversion.setText("v " + verName);
 
         down.setOnClickListener(this);
         downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
@@ -108,6 +119,7 @@ public class DownLoadActivity extends AppCompatActivity implements View.OnClickL
                             @Override
                             public void run() {
                                 tishi.setVisibility(View.VISIBLE);
+                                down.setText("下载完成");
                                 Toast.makeText(DownLoadActivity.this,"下载完成，请下滑状态栏进行安装哟~~~",Toast.LENGTH_SHORT).show();
                             }
                         });
