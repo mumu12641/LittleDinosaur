@@ -372,6 +372,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                 break;
         }
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.release();
+    }
     private class musicThread extends Thread{
         @Override
         public void run() {
