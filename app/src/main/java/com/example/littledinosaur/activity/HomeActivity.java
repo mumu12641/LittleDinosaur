@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -38,6 +39,8 @@ import static android.view.View.INVISIBLE;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener {
 
+    long waitTime = 2000;
+    long touchTime = 0;
     private FragmentManager fragmentManager;
     private ImageView home;
     private ImageView search;
@@ -226,11 +229,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         my.setImageResource(R.drawable.my);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -354,5 +352,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 ////            }
 ////        }, 10);
 
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(event.getAction() == KeyEvent.ACTION_DOWN && KeyEvent.KEYCODE_BACK == keyCode) {
+            long currentTime = System.currentTimeMillis();
+            if((currentTime-touchTime)>=waitTime) {
+                //让Toast的显示时间和等待时间相同
+                Toast.makeText(this, "再按一次退出", (int)waitTime).show();
+                touchTime = currentTime;
+            }else {
+                HomeActivity.this.finish();
+                searchFragment = null;
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

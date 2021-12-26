@@ -25,6 +25,12 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="q">
         <activity
+            android:name=".activity.CertainSchoolActivity"
+            android:theme="@style/AppTheme.NoActionBar"  />
+        <activity
+            android:name=".activity.SchoolActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activity.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

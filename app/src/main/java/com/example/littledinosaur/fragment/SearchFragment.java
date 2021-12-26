@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import com.example.littledinosaur.ListLikesAndCollects;
 import com.example.littledinosaur.R;
 import com.example.littledinosaur.activity.DownLoadActivity;
 import com.example.littledinosaur.activity.MainActivity;
+import com.example.littledinosaur.activity.SchoolActivity;
 import com.example.littledinosaur.adapter.ToDoNoteAdpter;
 
 import org.json.JSONException;
@@ -67,6 +69,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
     private SeekBar musicbar;
     private MediaPlayer mediaPlayer;
     private ImageView research_song;
+    private RelativeLayout school_reline;
 
     private int songLength;//歌曲时长
     private boolean isPlaying = false;//是否在播放
@@ -98,6 +101,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
         musicplay = view.findViewById(R.id.playsong);
         musicimage = view.findViewById(R.id.musicimage);
         research_song = view.findViewById(R.id.research_song);
+        school_reline = view.findViewById(R.id.school_reline);
 
         String mottotextString = null;
         String mottoautherString = null;
@@ -201,6 +205,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+        school_reline.setOnClickListener(this);
         musicplay.setOnClickListener(this);
         nextsong.setOnClickListener(this);
         research_song.setOnClickListener(this);
@@ -361,6 +366,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
 
                 dialog.show();
                 break;
+            case R.id.school_reline:
+                Intent intent = new Intent(context, SchoolActivity.class);
+                startActivity(intent);
+                break;
         }
     }
     private class musicThread extends Thread{
@@ -372,6 +381,17 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                 musicbar.setProgress(nowpos);
                 SystemClock.sleep(1000);
             }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("meidadestroy","destroymediaplayer");
+        thread = null;
+        musicbar.setProgress(musicbar.getMax());
+        if (mediaPlayer!=null) {
+            mediaPlayer.release();
         }
     }
 }

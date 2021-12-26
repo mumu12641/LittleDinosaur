@@ -1,5 +1,6 @@
 package com.example.littledinosaur.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -51,7 +52,7 @@ public class ToDoNoteAdpter extends RecyclerView.Adapter<ToDoNoteAdpter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.textView.setText(list.get(position));
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,11 +88,13 @@ public class ToDoNoteAdpter extends RecyclerView.Adapter<ToDoNoteAdpter.ViewHold
         return list.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void addNote(String s){
         list.add(s);
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void deleteNote(String s){
         list.remove(s);
         notifyDataSetChanged();

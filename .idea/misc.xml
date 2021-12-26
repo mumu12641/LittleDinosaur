@@ -14,15 +14,19 @@
         <entry key="..\:/LittleDinosaur/app/src/main/res/layout/aboutmessage.xml" value="0.12047101449275362" />
         <entry key="..\:/LittleDinosaur/app/src/main/res/layout/aboutmessagecontent.xml" value="0.16666666666666666" />
         <entry key="..\:/LittleDinosaur/app/src/main/res/layout/activity_about.xml" value="0.16666666666666666" />
+        <entry key="..\:/LittleDinosaur/app/src/main/res/layout/activity_certain_school.xml" value="0.16666666666666666" />
         <entry key="..\:/LittleDinosaur/app/src/main/res/layout/activity_down_load.xml" value="0.22" />
         <entry key="..\:/LittleDinosaur/app/src/main/res/layout/activity_home.xml" value="0.22" />
         <entry key="..\:/LittleDinosaur/app/src/main/res/layout/activity_login.xml" value="0.3333333333333333" />
         <entry key="..\:/LittleDinosaur/app/src/main/res/layout/activity_main.xml" value="0.10643115942028986" />
         <entry key="..\:/LittleDinosaur/app/src/main/res/layout/activity_message.xml" value="0.16666666666666666" />
+        <entry key="..\:/LittleDinosaur/app/src/main/res/layout/activity_school.xml" value="0.22" />
         <entry key="..\:/LittleDinosaur/app/src/main/res/layout/dialog_icon.xml" value="0.5" />
         <entry key="..\:/LittleDinosaur/app/src/main/res/layout/dialog_todonote.xml" value="0.22" />
         <entry key="..\:/LittleDinosaur/app/src/main/res/layout/dialog_update.xml" value="0.12047101449275362" />
-        <entry key="..\:/LittleDinosaur/app/src/main/res/layout/searchfragment.xml" value="0.22" />
+        <entry key="..\:/LittleDinosaur/app/src/main/res/layout/school_adapter.xml" value="0.11639492753623189" />
+        <entry key="..\:/LittleDinosaur/app/src/main/res/layout/searchfragment.xml" value="0.16666666666666666" />
+        <entry key="..\:/LittleDinosaur/app/src/main/res/layout/treeholemessage.xml" value="0.11639492753623189" />
       </map>
     </option>
   </component>

@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.littledinosaur.ListLikesAndCollects;
 import com.example.littledinosaur.R;
 import com.example.littledinosaur.UserDataBase;
 import com.example.littledinosaur.service.GetUserLikesAndCollectsService;
@@ -71,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 bundle.putString("Username", name);
 
 
-
+                ListLikesAndCollects.clearList();
                 Intent intent1 = new Intent(LoginActivity.this, GetUserLikesAndCollectsService.class);
                 intent1.putExtras(bundle);
                 startService(intent1);
@@ -148,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                             Bundle bundle = new Bundle();
 
                             bundle.putString("Username",cursor.getString(cursor.getColumnIndex("UserName")));
+                            ListLikesAndCollects.clearList();
                             Intent intent1 = new Intent(LoginActivity.this, GetUserLikesAndCollectsService.class);
                             intent1.putExtras(bundle);
                             startService(intent1);
